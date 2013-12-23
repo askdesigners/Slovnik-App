@@ -1,5 +1,12 @@
-app.controller('NewWordCtrl', ['$scope', function($scope) {
+app.controller('NewWordCtrl', ['$scope', 'wordsService', function($scope, wordsService) {
 	'use strict';
-    $scope.message = "Message from word Controller";
+
+    $scope.saveWord = function(word){
+		wordsService.create(word);
+    };
+
+	$scope.canSave = function(){
+		return true; // validate here
+	};
 
 }]);

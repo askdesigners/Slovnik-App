@@ -1,2 +1,40 @@
-<p>Words list<p>
-<p>{{message}}</p>
+<p>Save a new word<p>
+<form name="newWordForm" class="form-horizontal">
+	<div class="control-group">
+		<label for="says" class="control-label">Says</label>
+		<div class="controls">
+			<input type="text" id="says" class="input-xlarge seedlarge" ng-model="entry.says">
+		</div>
+	</div>
+	<div class="control-group">
+		<label for="means" class="control-label">It Means:</label>
+		<div class="controls">
+			<input type="text" id="means" class="input-xlarge seedlarge" ng-model="entry.means">
+		</div>
+	</div>
+	<div class="control-group">
+		<label for="language" class="control-label">He says it in: </label>
+		<div class="controls">
+			<label class="radio inline">
+				<input type="radio" name="language" value="czech" ng-model="entry.language">
+				czech
+			</label>
+			<label class="radio inline">
+				<input type="radio" name="language" value="english" ng-model="entry.language">
+				english
+			</label>
+		</div>
+	</div>
+	<div class="control-group">
+		<label for="translation" class="control-label">And it Translates to:</label>
+		<div class="controls">
+			<input type="text" id="translation" class="input-xlarge seedlarge" ng-model="entry.translation">
+		</div>
+	</div>
+	<div class="control-group">
+        <div class="controls">
+            <input type="submit" value="save" id="saveWordButton" class="btn btn-success" 
+                ng-disabled="!canSave()" ng-click="saveWord(entry)">
+        </div>
+    </div>
+</form>

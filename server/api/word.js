@@ -20,11 +20,11 @@ exports.createWord = function (req, res) {
             // Try to save it on our DB
             newWord.save(function (err, word) {
                 if (err) {
-                    res.send({ error: 1 }, 200);
+                    res.send({ error: 1, message: "something fucked up..." }, 200);
                 }
                 else {
                     res.send({ error: 0 }, 200); // I added this
-                    console.log("New word added successfully!");
+                    console.log("New word saved successfully!");
                 }
             });
         }
@@ -62,14 +62,9 @@ exports.getAllWords = function (req, res) {
 
     getWords.exec(function (err, words) {
         if (err) {
-            res.send("Could not retrieve word's details", 400);
+            res.send("Could not retrieve word list", 400);
         } else {
-          res.writeHead(200, {'Content-Length': body.length}); // starts response w header
-          res.write({wordExists: 1, wordsCount: words.length}); // confirms success
-          words.forEach(function(word){
-            res.write(word); // poops out words?
-          });
-          res.end(); // ends response
+            res.send({'wordCount':words.length, 'words':words});
         }
     });
 };
