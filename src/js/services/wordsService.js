@@ -2,7 +2,7 @@ app.factory('wordsService', ['$http', '$resource', '$q', function ($http, $resou
 
 	var wordsResource = $resource('words', 
 		{}, 
-		{ 'list' : {method: 'GET', isArray: false, timeout: 2000, responseType: "json"} });
+		{ 'query' : {method: 'GET', isArray: false, cache: true} });
 
 	var wordResource = $resource('word/:says', {says: '@says'},
 		{
@@ -15,7 +15,7 @@ app.factory('wordsService', ['$http', '$resource', '$q', function ($http, $resou
 	var factory = {
 		query : function () {
 			var deferred = $q.defer();
-			wordsResource.list({},
+			wordsResource.query({},
 			function (resp) {
 				deferred.resolve(resp);
 			});

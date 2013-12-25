@@ -1,15 +1,15 @@
 app.controller('WordsCtrl', ['$scope', 'wordsService', function($scope, wordsService) {
 	'use strict';
 
-	$scope.wordsList = wordsService.query()
-	.then(function (data){
-		return data.words;
-	}, function (error){
-		console.log(error);
-	});
+	console.log('words list ctrl');
 
-	$scope.wordsExist = function(){
-		return $scope.wordsList.wordCount > 0;
-	};
+	wordsService.query()
+		.then(function (data){
+			console.log(data.words);
+			$scope.wordsExist = (data.wordCount > 0) ? true : false;
+			$scope.wordsList = data.words;
+		}, function (error){
+			console.log(error);
+		});
 
 }]);

@@ -1,7 +1,9 @@
 <p>Words list<p>
-<ul ng-show="wordsExist()">
-	<li ng-repeat="word in wordsList.words">{{word.says}}</li>
+<ul ng-show="wordsExist"
+	<li ng-repeat="word in wordsList">
+		<a href="/#/word/{{word.says}}">{{word.says}}</a>
+	</li>
 </ul>
-<div ng-show="!wordsExist()">
+<div ng-show="!wordsExist">
 	<h4>There are no words yet!</h4>
 </div>

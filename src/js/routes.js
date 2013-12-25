@@ -16,7 +16,7 @@ app.config(['$routeProvider', function ($routeProvider) {
         templateUrl: '/partials/wordsList',
         controller: 'WordsCtrl'
     })
-    .when('/word', {
+    .when('/word/:says', {
         templateUrl: '/partials/word',
         controller: 'WordCtrl'
     })
