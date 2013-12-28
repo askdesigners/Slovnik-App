@@ -11,7 +11,7 @@
 
   grunt.registerTask('default', ['jshint','build'/*.,'karma:unit'*/]);
   grunt.registerTask('build', ['clean','concat:dev','copy','processhtml:dev']);
-  grunt.registerTask('release', ['jshint','clean','concat:dist','uglify',/*'karma:unit',*/'copy:assets','processhtml:dist']);
+  grunt.registerTask('release', ['jshint','clean','concat:dist','uglify',/*'karma:unit',*/'copy','processhtml:dist']);
   grunt.registerTask('test-watch', [/*'karma:watch'*/]);
   grunt.registerTask('js', ['jshint','clean','concat:dev','copy' /* ,'karma:unit' */]);
   grunt.registerTask('tpl-watch', ['clean','copy:tpl','watch:tpl' /* ,'karma:unit' */]);

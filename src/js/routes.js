@@ -1,7 +1,7 @@
 app.config(['$routeProvider', function ($routeProvider) {
     'use strict';
     $routeProvider.when('/login', {
-        templateUrl: '/partials/enter',
+        templateUrl: '/partials/login',
         controller: 'LoginCtrl'
     })
     .when('/words', {
