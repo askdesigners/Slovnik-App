@@ -2,7 +2,7 @@ app.factory('wordsService', ['$http', '$resource', '$q', function ($http, $resou
 
 	var wordsResource = $resource('words', 
 		{}, 
-		{ 'query' : {method: 'GET', isArray: false, cache: true} });
+		{ 'query' : {method: 'GET', isArray: false, cache: false} });
 
 	var wordResource = $resource('word/:says', {says: '@says'},
 		{
@@ -29,12 +29,20 @@ app.factory('wordsService', ['$http', '$resource', '$q', function ($http, $resou
 			});
 			return deferred.promise;
 		},
-		create : function (payload) {
-			console.log('create!');
-			wordResource.create(payload, function(resp){
-				console.log(resp);
+		create: function (payload) {
+			var deferred = $q.defer();
+			wordResource.create(payload,
+			function (resp) {
+				deferred.resolve(resp);
 			});
+			return deferred.promise;
 		},
+		//create : function (payload) {
+		//console.log('create!');
+		//wordResource.create(payload, function(resp){
+		//console.log(resp);
+		//});
+		//},
 		update : function (says, payload) {
 			console.log('update: '+ says);
 			console.log(payload);
@@ -42,11 +50,15 @@ app.factory('wordsService', ['$http', '$resource', '$q', function ($http, $resou
 				console.log(resp);
 			});
 		},
-		remove : function (says) {
-			console.log('remove: '+ says);
-			wordResource.remove({says: says}, function(resp){
-				console.log(resp);
+		removeWord : function (payload) {
+			console.log('remove: '+ payload);
+	
+			var deferred = $q.defer();
+			wordResource.remove({says: payload},
+			function (resp) {
+				deferred.resolve(resp);
 			});
+			return deferred.promise;
 		}
 	};
 

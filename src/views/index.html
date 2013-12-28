@@ -2,7 +2,14 @@
     <head>
         <meta charset="utf-8">
         <title>Little Words</title>
-        <link rel="stylesheet" href="css/bootstrap.min.css"/>
+        <!-- build:remove:dev -->
+            <link rel="stylesheet" href="css/bootstrap.min.css"/>
+        <!-- /build -->
+
+        <!-- build:remove:dist -->
+            <link rel="stylesheet" href="css/bootstrap.css"/>
+        <!-- /build -->
+        <link href='http://fonts.googleapis.com/css?family=Inder|Just+Me+Again+Down+Here|Quando&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
         <link rel="stylesheet" href="css/bootstrap-responsive.min.css"/>
         <link rel="stylesheet" href="css/toastr.min.css"/>
         <link rel="stylesheet" href="css/app.css"/>
@@ -11,18 +18,30 @@
         <div class="page-header">
             <h1 class="text-center">Little Words</h1>
         </div>
-        <div ng-controller="RootCtrl">
-            <div> Hello {{email}}! <br/><br/></div>
+        <div ng-controller="RootCtrl" class="root">
+            <div ng-show="isLoggedIn" class="loggedInAs">Logged in as {{email}} 
+                <a class="btn btn-primary logout pull-right" ng-click="logout()">
+                    Logout <span class="glyphicon glyphicon-hand-right"></span>
+                </a>
+            </div>
+            <div ng-show="!isLoggedIn" class="loggedInAs">You're not logged in</div>
             <div ng-switch on="isLoggedIn">
-                <ul class="menu" ng-switch-when="false">
-                    <li><a href="#/login">Login / Register</a></li>
-                    <li><a href="#/unsecured">Unsecured Content</a></li>
-                </ul>
-                <ul class="menu" ng-switch-when="true">                    
-                    <li><a href="#/secure">Secure Content</a></li>
-                    <li><a href="#/words">Words</a></li>
-                    <li><a href="#/newword">New Word</a></li>
-                </ul>            
+                <nav class="menu" ng-switch-when="false">
+                    <button type="button" class="btn btn-primary btn-lg" ng-click="locate('/login')" ng-class="{active: active('/login')}">
+                        <span class="glyphicon glyphicon-book"></span> Login / Register
+                    </button>
+                    <button type="button" class="btn btn-primary btn-lg" ng-click="locate('/about')" ng-class="{active: active('/about')}">
+                        <span class="glyphicon glyphicon-heart"></span> What's this?
+                    </button>
+                </nav>
+                <nav class="menu" ng-switch-when="true">                    
+                    <button type="button" class="btn btn-primary btn-lg" ng-click="locate('/words')" ng-class="{active: active('/words')}">
+                        <span class="glyphicon glyphicon-book"></span> All Words
+                    </button>
+                    <button type="button" class="btn btn-primary btn-lg" ng-click="locate('/newword')" ng-class="{active: active('/newword')}">
+                        <span class="glyphicon glyphicon-comment"></span> Add a Word
+                    </button>
+                </nav>   
             </div>
             <div class="container-fluid" ng-view ng-animate="{enter: 'view-enter'}"></div>
         </div>
@@ -46,5 +65,6 @@
         <script src="js/components.js"></script>
         <script src="js/services.js"></script>
         <!-- /build -->
+
     </body>
 </html>

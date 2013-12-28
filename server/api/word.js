@@ -38,11 +38,11 @@ exports.createWord = function (req, res) {
 
 
 exports.getWordDetails = function (req, res) {
-    if(!req.word) {
+    if(!req.params.says) {
         res.send({ wordExists: 0 }, 200);
     }
     else {
-        var getWord = Word.findOne({ 'says': req.word.says }),
+        var getWord = Word.findOne({ 'says': req.params.says }),
             returnedWord = {};
 
         getWord.exec(function (err, word) {
@@ -50,7 +50,6 @@ exports.getWordDetails = function (req, res) {
                 res.send("Could not retrieve word's details", 400);
             }
 
-            returnedWord.says = word.says; // whole object should go here? redundant
             res.send({ wordExists: 1, word: word }, 201);
         });
     }   
@@ -69,19 +68,18 @@ exports.getAllWords = function (req, res) {
     });
 };
 
-exports.deleteWord = function (err, word){
-if(!req.word) {
+exports.deleteWord = function (req, res){
+if(!req.params.says) {
         res.send({ wordDeleted: 0 }, 200);
     }
     else {
-        var removeWord = Word.findOneAndRemove({ 'says': req.word.says });
+        var removeWord = Word.findOneAndRemove({ 'says': req.params.says });
 
         removeWord.exec(function (err, word) {
             if (err) {
                 res.send("Could not remove the word", 400);
             }
 
-            returnedWord.says = word.says; // whole object should go here?
             res.send({ wordDeleted: 1 }, 201);
         });
     }

@@ -4,12 +4,17 @@ app.controller('WordsCtrl', ['$scope', 'wordsService', function($scope, wordsSer
 	console.log('words list ctrl');
 
 	wordsService.query()
-		.then(function (data){
-			console.log(data.words);
-			$scope.wordsExist = (data.wordCount > 0) ? true : false;
-			$scope.wordsList = data.words;
-		}, function (error){
-			console.log(error);
-		});
+		
+	.then(function (data){
+		
+		$scope.wordsExist = (data.wordCount > 0) ? true : false;
+	
+		$scope.wordsList = data.words;
+	
+	}, function (error){
+	
+		console.log(error);
+	
+	});
 
 }]);

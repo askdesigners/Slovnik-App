@@ -57,7 +57,7 @@ app.controller('LoginCtrl',['$scope', '$rootScope', '$http', 'logger', 'messages
     }; 
 }]);
 
-app.controller('RootCtrl', ['$scope', '$http', 'logger', function($scope, $http, logger) {
+app.controller('RootCtrl', ['$scope', '$location', '$http', 'logger', function($scope, $location, $http, logger) {
     'use strict';
     console.log('RootCtrl');
     var request = $http.get('/getUserDetails');
@@ -73,6 +73,18 @@ app.controller('RootCtrl', ['$scope', '$http', 'logger', function($scope, $http,
         }
     });
 
+    $scope.locate = function(loc){
+        $location.path(loc);
+    };
+
+    $scope.active = function(loc){
+        if($location.path() == loc){
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     $scope.login = function(email, password) {
 
         var request = $http.post('/login', {email: email, password: password});
@@ -83,7 +95,7 @@ app.controller('RootCtrl', ['$scope', '$http', 'logger', function($scope, $http,
             }
             else {
                 $scope.isLoggedIn = true;
-                window.location.href = '#/secure';
+                window.location.href = '#/words';
                 $scope.email = response.data.user;
                 logger.success("Welcome " + response.data.user + "!");
             }

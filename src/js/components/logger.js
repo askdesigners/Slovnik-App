@@ -1,6 +1,6 @@
 app.factory('logger', [function () { 
 	toastr.options.timeOut = 3000; // 2 second toast timeout
-	toastr.options.positionClass = 'toast-bottom-right';
+	toastr.options.positionClass = 'toast-bottom-full-width';
 
 	var logger = {
 		error: error,
