@@ -13,7 +13,7 @@ var express = require('express'),
 // Configuration
 app.configure(function() {
     app.config = require('./config/config')[env];
-    app.set('port', process.env.PORT || 3000);
+    app.set('port', process.env.PORT || 5000);
     app.engine('html', require('ejs').renderFile);
     app.set('views', __dirname + '/app/views');
     app.set('view engine', 'html');

@@ -1,8 +1,6 @@
 app.controller('WordsCtrl', ['$scope', 'wordsService', function($scope, wordsService) {
 	'use strict';
 
-	console.log('words list ctrl');
-
 	wordsService.query()
 		
 	.then(function (data){

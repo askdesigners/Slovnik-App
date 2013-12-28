@@ -8,7 +8,7 @@ module.exports = {
         },
 
         db: 'mongodb://localhost/tiagoseed'
-    }
+    },
     production: {
     	app: {
     		name: 'slovnik'

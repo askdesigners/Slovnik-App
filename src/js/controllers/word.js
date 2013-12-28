@@ -3,8 +3,6 @@ app.controller('WordCtrl', ['$scope', '$routeParams', '$location', 'wordsService
     
     $scope.messages = messagesService.messages; 
 
-	console.log('word ctrl');
-
 	wordsService.get($routeParams.says)
 		
 		.then(function (data){

@@ -1,6 +1,5 @@
 app.controller('LoginCtrl',['$scope', '$rootScope', '$http', 'logger', 'messagesService',function($scope, $rootScope, $http, logger, messagesService){
     'use strict';
-    console.log('LoginCtrl');
     $scope.messages = messagesService.messages; 
 
     $scope.user = {};
@@ -59,7 +58,6 @@ app.controller('LoginCtrl',['$scope', '$rootScope', '$http', 'logger', 'messages
 
 app.controller('RootCtrl', ['$scope', '$location', '$http', 'logger', function($scope, $location, $http, logger) {
     'use strict';
-    console.log('RootCtrl');
     var request = $http.get('/getUserDetails');
 
     request.then(function(response) {
@@ -110,4 +108,9 @@ app.controller('RootCtrl', ['$scope', '$location', '$http', 'logger', function($
         });
     }    
 
+}]);
+
+app.controller('AboutCtrl', ['$scope', function($scope){
+    'use strict';
+    
 }]);

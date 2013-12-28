@@ -4,14 +4,6 @@ app.config(['$routeProvider', function ($routeProvider) {
         templateUrl: '/partials/enter',
         controller: 'LoginCtrl'
     })
-    .when('/unsecured', {
-        templateUrl: '/partials/unsecure',
-        controller: 'UnsecureCtrl'
-    })
-    .when('/secure', {
-        templateUrl: '/partials/secure',
-        controller: 'SecureCtrl'
-    })
     .when('/words', {
         templateUrl: '/partials/wordsList',
         controller: 'WordsCtrl'
@@ -23,6 +15,10 @@ app.config(['$routeProvider', function ($routeProvider) {
     .when('/newword', {
         templateUrl: '/partials/newword',
         controller: 'NewWordCtrl'
+    })
+    .when('/about', {
+        templateUrl: '/partials/about',
+        controller: 'AboutCtrl'
     })
     .otherwise({
       redirectTo: '/login'
