@@ -1,13 +1,13 @@
 {
   "name": "Slovnik",
-  "version": "1.0",
+  "version": "0.1",
   "private": false,
   "author": "Ryan Cole",
   "homepage": "tellmesomethingnice.com",
   "standards": "HTML5, CSS3",
   "framework": "Express, Angular",
   "engines": {
-    "node": "0.10.16"
+    "node": "0.10.x"
   },
   "dependencies": {
     "express": "3.0.0",
