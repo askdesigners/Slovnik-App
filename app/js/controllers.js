@@ -28,7 +28,7 @@ app.controller('EditWordCtrl', ['$scope', '$location', '$routeParams', 'wordsSer
 
 	$scope.cancelEdit = function(){
 
-		scope.word = angular.copy(scope.original);
+		$scope.word = angular.copy($scope.original);
 
 		$location.path('/word/' + $routeParams.says);		
 	
@@ -51,7 +51,7 @@ app.controller('EditWordCtrl', ['$scope', '$location', '$routeParams', 'wordsSer
             
                 logger.success($scope.messages["word saved"]);
             
-                $location.path('/word/' + $routeParams.says);
+                $location.path('/word/' + data.word.says);
             
             }
 		
@@ -228,7 +228,7 @@ app.controller('NewWordCtrl', ['$scope', '$location', 'wordsService', 'logger', 
 
     $scope.cancelCreate = function(){
 
-		scope.word = {};
+		$scope.word = {};
 
 		$location.path('/words');		
 	

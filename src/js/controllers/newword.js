@@ -31,7 +31,7 @@ app.controller('NewWordCtrl', ['$scope', '$location', 'wordsService', 'logger', 
 
     $scope.cancelCreate = function(){
 
-		scope.word = {};
+		$scope.word = {};
 
 		$location.path('/words');		
 	

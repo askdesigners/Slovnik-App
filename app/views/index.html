@@ -2,9 +2,8 @@
     <head>
         <meta charset="utf-8">
         <title>Little Words</title>
-
-        <!-- build:remove:dist -->
-            <link rel="stylesheet" href="css/bootstrap.css"/>
+        <!-- build:remove:dev -->
+            <link rel="stylesheet" href="css/bootstrap.min.css"/>
         <!-- /build -->
         <link href='http://fonts.googleapis.com/css?family=Inder|Just+Me+Again+Down+Here|Quando&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
         <link rel="stylesheet" href="css/bootstrap-responsive.min.css"/>
@@ -42,16 +41,14 @@
             </div>
             <div class="container-fluid" ng-view ng-animate="{enter: 'view-enter'}"></div>
         </div>
-
-        <!-- build:remove:dist -->
-        <script src="js/angular.js"></script>
-        <script src="js/ngmodules.js"></script>
-        <script src="js/jquery.js"></script>
-        <script src="js/plugins.js"></script>
-        <script src="js/app.js"></script>
-        <script src="js/controllers.js"></script>
-        <script src="js/components.js"></script>
-        <script src="js/services.js"></script>
+        
+        
+        <!-- build:remove:dev -->
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.6/angular.js"></script>
+        <script src="js/ngmodules.min.js"></script>
+        <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+        <script src="js/plugins.min.js"></script>
+        <script src="js/app.min.js"></script>
         <!-- /build -->
 
     </body>
