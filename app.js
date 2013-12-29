@@ -8,7 +8,8 @@ var express = require('express'),
     routes = require('./config/routes'),
     passport = require('passport'),
     env = process.env.NODE_ENV || 'development',
-    mongoose = require('mongoose'); 
+    mongoose = require('mongoose'),
+    mongoUri = process.env.MONGOLAB_URI || process.env.MONGOHQ_URL || app.config.db; 
 
 // Configuration
 app.configure(function() {
@@ -25,7 +26,6 @@ app.configure(function() {
     app.use(passport.initialize());
     app.use(passport.session());
     app.use(app.router);
-
     app.server = require('http').createServer(app);
   });
 
@@ -38,7 +38,8 @@ app.configure('production', function(){
   });
 
 // Mongoose connection
-mongoose.connect(app.config.db);
+console.log(mongoUri);
+mongoose.connect(mongoUri);
 
 // Configure passport
 require('./config/passport')();
