@@ -1,0 +1,8 @@
+<ul ng-show="wordsExist" class="wordList">
+	<li ng-repeat="word in wordsList">
+		<a href="/#/word/{{word.says}}">{{word.says}}</a>
+	</li>
+</ul>
+<div ng-show="!wordsExist">
+	<h4 class="noWords">There are no words yet!</h4>
+</div>

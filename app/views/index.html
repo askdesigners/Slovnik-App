@@ -1,0 +1,55 @@
+<html ng-app="slovnik">
+    <head>
+        <meta charset="utf-8">
+        <title>Little Words</title>
+        <!-- build:remove:dev -->
+            <link rel="stylesheet" href="css/bootstrap.min.css"/>
+        <!-- /build -->
+        <link href='http://fonts.googleapis.com/css?family=Inder|Just+Me+Again+Down+Here|Quando&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
+        <link rel="stylesheet" href="css/bootstrap-responsive.min.css"/>
+        <link rel="stylesheet" href="css/toastr.min.css"/>
+        <link rel="stylesheet" href="css/app.css"/>
+    </head>
+    <body>
+        <div class="page-header">
+            <h1 class="text-center">Little Words</h1>
+        </div>
+        <div ng-controller="RootCtrl" class="root">
+            <div ng-show="isLoggedIn" class="loggedInAs">Logged in as {{email}} 
+                <a class="btn btn-primary logout pull-right" ng-click="logout()">
+                    Logout <span class="glyphicon glyphicon-hand-right"></span>
+                </a>
+            </div>
+            <div ng-show="!isLoggedIn" class="loggedInAs">You're not logged in</div>
+            <div ng-switch on="isLoggedIn">
+                <nav class="menu" ng-switch-when="false">
+                    <button type="button" class="btn btn-primary btn-lg" ng-click="locate('/login')" ng-class="{active: active('/login')}">
+                        Signup/in
+                    </button>
+                    <button type="button" class="btn btn-primary btn-lg" ng-click="locate('/about')" ng-class="{active: active('/about')}">
+                        <span class="glyphicon glyphicon-heart"></span> What's this?
+                    </button>
+                </nav>
+                <nav class="menu" ng-switch-when="true">                    
+                    <button type="button" class="btn btn-primary btn-lg" ng-click="locate('/words')" ng-class="{active: active('/words')}">
+                        <span class="glyphicon glyphicon-book"></span> All Words
+                    </button>
+                    <button type="button" class="btn btn-primary btn-lg" ng-click="locate('/newword')" ng-class="{active: active('/newword')}">
+                        <span class="glyphicon glyphicon-comment"></span> Add a Word
+                    </button>
+                </nav>   
+            </div>
+            <div class="container-fluid" ng-view ng-animate="{enter: 'view-enter'}"></div>
+        </div>
+        
+        
+        <!-- build:remove:dev -->
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.6/angular.js"></script>
+        <script src="js/ngmodules.min.js"></script>
+        <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+        <script src="js/plugins.min.js"></script>
+        <script src="js/app.min.js"></script>
+        <!-- /build -->
+
+    </body>
+</html>
