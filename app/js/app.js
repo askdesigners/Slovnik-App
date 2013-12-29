@@ -18,6 +18,10 @@ app.config(['$routeProvider', function ($routeProvider) {
         templateUrl: '/partials/word',
         controller: 'WordCtrl'
     })
+    .when('/edit/:says', {
+        templateUrl: '/partials/editword',
+        controller: 'EditWordCtrl'
+    })
     .when('/newword', {
         templateUrl: '/partials/newword',
         controller: 'NewWordCtrl'
@@ -73,6 +77,81 @@ app.factory('logger', [function () {
 	return logger;
 }]);
 
+app.controller('EditWordCtrl', ['$scope', '$location', '$routeParams', 'wordsService', 'logger', 'messagesService', function($scope, $location, $routeParams, wordsService, logger, messagesService) {
+	'use strict';
+	
+	$scope.messages = messagesService.messages; 
+
+	wordsService.get($routeParams.says)
+		
+		.then(function (data){
+
+			$scope.query = $routeParams.says;
+			
+			$scope.wordExists = data.wordExists;
+			
+			$scope.word = data.word;
+			
+		}, function (error){
+
+			console.log(error);
+		
+		});
+
+	$scope.original = angular.copy($scope.word);
+
+	$scope.cancelEdit = function(){
+
+		$scope.word = angular.copy($scope.original);
+
+		$location.path('/word/' + $routeParams.says);		
+	
+	};
+
+    $scope.saveEditedWord = function(word){
+
+		word.addedby = $scope.email;
+		console.log($scope.email);
+		
+		wordsService.update($routeParams.says, word)
+		
+		.then(function (data){	
+
+			if(data.error === 1) {
+            
+                logger.error($scope.messages["word lost"]);
+            
+            } else {
+            
+                logger.success($scope.messages["word saved"]);
+            
+                $location.path('/word/' + data.word.says);
+            
+            }
+		
+		}, function (error){
+		
+			console.log(error);
+		
+		});
+    
+    };		
+
+	$scope.canSave = function(){
+		
+		if($scope.newWordForm.$valid && $scope.newWordForm.$dirty){
+		
+			return true;
+		
+		} else {
+		
+			return false;
+		
+		}
+	
+	};
+
+}]);
 app.controller('LoginCtrl',['$scope', '$rootScope', '$http', 'logger', 'messagesService',function($scope, $rootScope, $http, logger, messagesService){
     'use strict';
     $scope.messages = messagesService.messages; 
@@ -219,7 +298,15 @@ app.controller('NewWordCtrl', ['$scope', '$location', 'wordsService', 'logger', 
 		
 		});
     
-    };		
+    };	
+
+    $scope.cancelCreate = function(){
+
+		$scope.word = {};
+
+		$location.path('/words');		
+	
+	};	
 
 	$scope.canSave = function(){
 		
@@ -248,6 +335,8 @@ app.controller('WordCtrl', ['$scope', '$routeParams', '$location', 'wordsService
     
     $scope.messages = messagesService.messages; 
 
+    $scope.deleting = false;
+
 	wordsService.get($routeParams.says)
 		
 		.then(function (data){
@@ -264,14 +353,22 @@ app.controller('WordCtrl', ['$scope', '$routeParams', '$location', 'wordsService
 		
 		});
 
-	$scope.deleting = false;
+	$scope.edit = function(){
+
+		$location.path('/edit/' + $routeParams.says);
+	
+	};
 
 	$scope.showDelete = function(){
+
 		$scope.deleting = true;
+
 	};
 
 	$scope.cancelDelete = function(){
+
 		$scope.deleting = false;
+
 	};
 
 	$scope.deleteWord = function(){
@@ -374,18 +471,13 @@ app.factory('wordsService', ['$http', '$resource', '$q', function ($http, $resou
 			});
 			return deferred.promise;
 		},
-		//create : function (payload) {
-		//console.log('create!');
-		//wordResource.create(payload, function(resp){
-		//console.log(resp);
-		//});
-		//},
-		update : function (says, payload) {
-			console.log('update: '+ says);
-			console.log(payload);
-			wordResource.update({says: says}, payload, function(resp){
-				console.log(resp);
+		update: function (says, payload) {
+			var deferred = $q.defer();
+			wordResource.update({says: says}, payload,
+			function (resp) {
+				deferred.resolve(resp);
 			});
+			return deferred.promise;
 		},
 		removeWord : function (payload) {
 			console.log('remove: '+ payload);

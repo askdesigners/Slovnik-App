@@ -3,6 +3,8 @@ app.controller('WordCtrl', ['$scope', '$routeParams', '$location', 'wordsService
     
     $scope.messages = messagesService.messages; 
 
+    $scope.deleting = false;
+
 	wordsService.get($routeParams.says)
 		
 		.then(function (data){
@@ -19,14 +21,22 @@ app.controller('WordCtrl', ['$scope', '$routeParams', '$location', 'wordsService
 		
 		});
 
-	$scope.deleting = false;
+	$scope.edit = function(){
+
+		$location.path('/edit/' + $routeParams.says);
+	
+	};
 
 	$scope.showDelete = function(){
+
 		$scope.deleting = true;
+
 	};
 
 	$scope.cancelDelete = function(){
+
 		$scope.deleting = false;
+
 	};
 
 	$scope.deleteWord = function(){

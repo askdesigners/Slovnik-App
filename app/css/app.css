@@ -175,6 +175,12 @@ ul.wordList  {
   line-height: 62px;
 }
 
+.wordTextMore{
+  color: #FF654D;
+  font-size: 1.5em;
+  margin: 0 0 10px 0;
+}
+
 .wordExp{
   color: #3D3D3A;
   font-size: 1em;

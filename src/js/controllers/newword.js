@@ -27,7 +27,15 @@ app.controller('NewWordCtrl', ['$scope', '$location', 'wordsService', 'logger', 
 		
 		});
     
-    };		
+    };	
+
+    $scope.cancelCreate = function(){
+
+		$scope.word = {};
+
+		$location.path('/words');		
+	
+	};	
 
 	$scope.canSave = function(){
 		

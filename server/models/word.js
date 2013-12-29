@@ -8,6 +8,8 @@ var WordSchema = new Schema({
     means: String,
     translation: String,
     language: String,
+    more: String,
+    addedby: String,
     date: { type: Date, default: Date.now }
 });
 
