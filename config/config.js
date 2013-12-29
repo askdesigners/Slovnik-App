@@ -14,6 +14,6 @@ module.exports = {
     		name: 'slovnik'
     	},
 
-    	db: ' mongodb://slovnik:aledorocks123@ds063158.mongolab.com:63158/words'
+    	db: 'mongodb://heroku_app20769723:aledorocks123@ds061938.mongolab.com:61938/heroku_app20769723'
     }
 };
