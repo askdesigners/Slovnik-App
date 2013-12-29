@@ -1,4 +1,4 @@
-/*! Slovnik - v - 2013-12-28
+/*! Slovnik - v - 2013-12-29
  * tellmesomethingnice.com
  * Copyright (c) 2013 Ryan Cole;
  * Licensed 
@@ -59,18 +59,13 @@ app.factory('wordsService', ['$http', '$resource', '$q', function ($http, $resou
 			});
 			return deferred.promise;
 		},
-		//create : function (payload) {
-		//console.log('create!');
-		//wordResource.create(payload, function(resp){
-		//console.log(resp);
-		//});
-		//},
-		update : function (says, payload) {
-			console.log('update: '+ says);
-			console.log(payload);
-			wordResource.update({says: says}, payload, function(resp){
-				console.log(resp);
+		update: function (says, payload) {
+			var deferred = $q.defer();
+			wordResource.update({says: says}, payload,
+			function (resp) {
+				deferred.resolve(resp);
 			});
+			return deferred.promise;
 		},
 		removeWord : function (payload) {
 			console.log('remove: '+ payload);

@@ -13,9 +13,10 @@ function configureRoutes(passport) {
     app.post('/register', routes.register);
     app.get('/login', routes.login);
     app.get('/getUserDetails', routes.getUserDetails);
-    app.put('/word/:says', routes.newWord);
-    app.get('/word/:says', routes.getWordDetails);
     app.get('/words', routes.getAllWords);
+    app.put('/word/:says', routes.newWord);
+    app.post('/word/:says', routes.editWord);
+    app.get('/word/:says', routes.getWordDetails);
     app.delete('/word/:says', routes.deleteWord);
 
 

@@ -46,6 +46,10 @@ exports.newWord = function (req, res) {
     api.word.createWord(req, res);
 };
 
+exports.editWord = function (req, res) {
+    api.word.editWord(req, res);
+};
+
 exports.getWordDetails = function (req, res) {
     api.word.getWordDetails(req, res);
 };

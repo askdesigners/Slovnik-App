@@ -31,6 +31,15 @@
 		</div>
 	</div>
 	<div class="control-group">
+		<label for="more" class="control-label">More:</label>
+		<div class="controls">
+			<textarea id="more" class="seedlarge form-control" rows="4" ng-model="word.more"></textarea>
+		</div>
+	</div>
+	<div class="reset">
+        <a class="resetForm" ng-click="cancelCreate()">Cancel</a>
+    </div>
+	<div class="control-group">
         <input type="submit" value="save" id="saveWordButton" class="btn btn-success btn-lg btn-block" ng-disabled="!canSave()" ng-click="saveWord(entry)"> 
     </div>
 </form>
