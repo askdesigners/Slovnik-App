@@ -1,5 +1,5 @@
-/*! Slovnik - v - 2013-12-29
- * tellmesomethingnice.com
+/*! Slovnik - v - 2013-12-30
+ * http://www.tellmesomethingnice.com
  * Copyright (c) 2013 Ryan Cole;
  * Licensed 
  */
@@ -255,6 +255,24 @@ app.controller('SecureCtrl', ['$scope', function($scope){
 	
 	$scope.message = "Message from Secure Controller";
 	
+}]);
+app.controller('StatsCtrl', ['$scope', '$location', 'statsService', function($scope, $location, statsService) {
+	'use strict';
+
+	statsService()
+		
+		.then(function (data){
+			
+			console.log(data);
+
+			$scope.stats = data;
+			
+		}, function (error){
+
+			console.log(error);
+		
+		});
+
 }]);
 app.controller('WordCtrl', ['$scope', '$routeParams', '$location', 'wordsService', 'logger', 'messagesService', function($scope, $routeParams, $location, wordsService, logger, messagesService) {
 	'use strict';

@@ -1,5 +1,5 @@
-/*! Slovnik - v - 2013-12-29
- * tellmesomethingnice.com
+/*! Slovnik - v - 2013-12-30
+ * http://www.tellmesomethingnice.com
  * Copyright (c) 2013 Ryan Cole;
  * Licensed 
  */
@@ -19,6 +19,25 @@ app.factory('messagesService', function() {
 		}
 	}
 });
+
+app.factory('statsService', ['$http', '$resource', '$q', function ($http, $resource, $q) {
+
+	var statsResource = $resource('stats', 
+		{}, 
+		{ 'query' : {method: 'GET', isArray: false, cache: true} });
+
+	var factory = function () {
+		var deferred = $q.defer();
+		statsResource.query({},
+		function (resp) {
+			deferred.resolve(resp);
+		});
+		return deferred.promise;
+	};
+
+	return factory;
+	
+}]);
 
 app.factory('wordsService', ['$http', '$resource', '$q', function ($http, $resource, $q) {
 

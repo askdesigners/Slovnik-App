@@ -6,6 +6,7 @@
 var api = {};
 api.user = require('../server/api/user');
 api.word = require('../server/api/word');
+api.stats = require('../server/api/stats');
 
 exports.index = function(req, res){
   res.render('index');
@@ -60,4 +61,8 @@ exports.getAllWords = function (req, res){
 
 exports.deleteWord = function (req, res){
     api.word.deleteWord(req, res);
+};
+
+exports.getStats = function (req, res){
+    api.stats.getStats(req, res);
 };

@@ -4,8 +4,9 @@
         <title>Ollie Words</title>
 
         <link rel="stylesheet" media="only screen and (max-width: 800px)" href="/css/mobile.css" />
-        <!-- build:remove:dev -->
-            <link rel="stylesheet" href="css/bootstrap.min.css"/>
+
+        <!-- build:remove:dist -->
+            <link rel="stylesheet" href="css/bootstrap.css"/>
         <!-- /build -->
         <link href='http://fonts.googleapis.com/css?family=Inder|Just+Me+Again+Down+Here|Quando&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
         <link rel="stylesheet" href="css/bootstrap-responsive.min.css"/>
@@ -49,14 +50,16 @@
                 <div class="container-fluid" ng-view ng-animate="{enter: 'view-enter'}"></div>
             </div>
         </section>
-        
-        
-        <!-- build:remove:dev -->
-        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.6/angular.js"></script>
-        <script src="js/ngmodules.min.js"></script>
-        <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
-        <script src="js/plugins.min.js"></script>
-        <script src="js/app.min.js"></script>
+
+        <!-- build:remove:dist -->
+        <script src="js/angular.js"></script>
+        <script src="js/ngmodules.js"></script>
+        <script src="js/jquery.js"></script>
+        <script src="js/plugins.js"></script>
+        <script src="js/app.js"></script>
+        <script src="js/controllers.js"></script>
+        <script src="js/components.js"></script>
+        <script src="js/services.js"></script>
         <!-- /build -->
 
     </body>

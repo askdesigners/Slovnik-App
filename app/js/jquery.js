@@ -1,5 +1,5 @@
-/*! Slovnik - v - 2013-12-29
- * tellmesomethingnice.com
+/*! Slovnik - v - 2013-12-30
+ * http://www.tellmesomethingnice.com
  * Copyright (c) 2013 Ryan Cole;
  * Licensed 
  */

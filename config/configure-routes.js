@@ -18,6 +18,7 @@ function configureRoutes(passport) {
     app.post('/word/:says', routes.editWord);
     app.get('/word/:says', routes.getWordDetails);
     app.delete('/word/:says', routes.deleteWord);
+    app.get('/stats', routes.getStats);
 
 
     app.post('/login', function(req, res, next) {

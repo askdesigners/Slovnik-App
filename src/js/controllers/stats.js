@@ -1,10 +1,12 @@
 app.controller('StatsCtrl', ['$scope', '$location', 'statsService', function($scope, $location, statsService) {
 	'use strict';
 
-	statsService.query()
+	statsService()
 		
 		.then(function (data){
 			
+			console.log(data);
+
 			$scope.stats = data;
 			
 		}, function (error){
