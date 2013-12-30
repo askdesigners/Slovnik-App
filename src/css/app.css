@@ -52,6 +52,10 @@ body {
   padding: 0 10px;
 }
 
+.loginRegButton {
+  text-align: center;
+}
+
 .about h5{
   color: #FF654D;
   font-size: 1.5em;
