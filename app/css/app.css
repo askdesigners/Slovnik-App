@@ -153,7 +153,7 @@ body {
 }
 
 .ng-scope .btn-lg{
-  font-size: 1.2em;
+  font-size: 1.1em;
 }
 
 .ng-scope .btn.logout {
@@ -220,6 +220,8 @@ ul.wordList  {
   border: 1px solid #3D3D3A;
   padding: 10px;
   text-align: center;
+  width: 100% !important;
+  max-width: 500px !important;
 }
 
 .ng-scope input.ng-invalid {
