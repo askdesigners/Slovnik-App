@@ -1,5 +1,5 @@
 <ul ng-show="wordsExist" class="wordList">
-	<li ng-repeat="word in wordsList">
+	<li ng-repeat="word in wordsList | object2Array | orderBy:'says'" >
 		<a href="/#/word/{{word.says}}">{{word.says}}</a>
 	</li>
 </ul>

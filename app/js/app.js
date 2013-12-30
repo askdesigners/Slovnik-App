@@ -1,5 +1,5 @@
 /*! Slovnik - v - 2013-12-30
- * tellmesomethingnice.com
+ * http://www.tellmesomethingnice.com
  * Copyright (c) 2013 Ryan Cole;
  * Licensed 
  */
@@ -34,6 +34,23 @@ app.config(['$routeProvider', function ($routeProvider) {
       redirectTo: '/login'
     }); 
 }]);
+app.filter('object2Array', function() {
+	
+	return function(input) {
+
+		var out = []; 
+	
+		for (var i in input){
+			
+			out.push(input[i]);
+	
+		}
+	
+		return out;
+	
+	};
+
+});
 app.factory('logger', [function () { 
 	toastr.options.timeOut = 3000; // 2 second toast timeout
 	toastr.options.positionClass = 'toast-bottom-full-width';

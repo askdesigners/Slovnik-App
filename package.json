@@ -2,7 +2,8 @@
   "name": "Slovnik",
   "private": false,
   "author": "Ryan Cole",
-  "homepage": "tellmesomethingnice.com",
+  "homepage": "http://www.tellmesomethingnice.com",
+  "repository":"https://github.com/askdesigners/Slovnik-App",
   "standards": "HTML5, CSS3",
   "framework": "Express, Angular",
   "engines": {
