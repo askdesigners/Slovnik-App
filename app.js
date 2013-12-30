@@ -3,6 +3,13 @@
  * Very Simple MEAN Seed by Ryan Cole, based on the Node-Express-Angular-RequireJS Seed by Tiago Reis
  */
 
+if(process.env.NODETIME_ACCOUNT_KEY) {
+    require('nodetime').profile({
+        accountKey: process.env.NODETIME_ACCOUNT_KEY,
+        appName: 'Ollie Words' // optional
+    });
+}
+
 var express = require('express'),
     app = module.exports = express(),
     routes = require('./config/routes'),
