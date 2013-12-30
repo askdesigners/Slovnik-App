@@ -2,6 +2,8 @@
     <head>
         <meta charset="utf-8">
         <title>Little Words</title>
+
+        <link rel="stylesheet" media="only screen and (max-width: 800px)" href="/css/mobile.css" />
         <!-- build:remove:dev -->
             <link rel="stylesheet" href="css/bootstrap.min.css"/>
         <!-- /build -->
@@ -13,38 +15,44 @@
         <link rel="stylesheet" href="css/bootstrap-responsive.min.css"/>
         <link rel="stylesheet" href="css/toastr.min.css"/>
         <link rel="stylesheet" href="css/app.css"/>
+
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=0.5 maximum-scale=1.0">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     </head>
     <body>
-        <div class="page-header">
-            <h1 class="text-center">Little Words</h1>
-        </div>
-        <div ng-controller="RootCtrl" class="root">
-            <div ng-show="isLoggedIn" class="loggedInAs">Logged in as {{email}} 
-                <a class="btn btn-primary logout pull-right" ng-click="logout()">
-                    Logout <span class="glyphicon glyphicon-hand-right"></span>
-                </a>
+        <section id="mainWrap">
+            <div class="page-header">
+                <h1 class="text-center">Little Words</h1>
             </div>
-            <div ng-show="!isLoggedIn" class="loggedInAs">You're not logged in</div>
-            <div ng-switch on="isLoggedIn">
-                <nav class="menu" ng-switch-when="false">
-                    <button type="button" class="btn btn-primary btn-lg" ng-click="locate('/login')" ng-class="{active: active('/login')}">
-                        Signup/in
-                    </button>
-                    <button type="button" class="btn btn-primary btn-lg" ng-click="locate('/about')" ng-class="{active: active('/about')}">
-                        <span class="glyphicon glyphicon-heart"></span> What's this?
-                    </button>
-                </nav>
-                <nav class="menu" ng-switch-when="true">                    
-                    <button type="button" class="btn btn-primary btn-lg" ng-click="locate('/words')" ng-class="{active: active('/words')}">
-                        <span class="glyphicon glyphicon-book"></span> All Words
-                    </button>
-                    <button type="button" class="btn btn-primary btn-lg" ng-click="locate('/newword')" ng-class="{active: active('/newword')}">
-                        <span class="glyphicon glyphicon-comment"></span> Add a Word
-                    </button>
-                </nav>   
+            <div ng-cloak ng-controller="RootCtrl" class="root">
+                <div ng-show="isLoggedIn" class="loggedInAs">Logged in as {{email}} 
+                    <a class="btn btn-primary logout pull-right" ng-click="logout()">
+                        Logout <span class="glyphicon glyphicon-hand-right"></span>
+                    </a>
+                </div>
+                <div ng-show="!isLoggedIn" class="loggedInAs">You're not logged in</div>
+                <div ng-switch on="isLoggedIn">
+                    <nav class="menu" ng-switch-when="false">
+                        <button type="button" class="btn btn-primary btn-lg" ng-click="locate('/login')" ng-class="{active: active('/login')}">
+                            Signup/in
+                        </button>
+                        <button type="button" class="btn btn-primary btn-lg" ng-click="locate('/about')" ng-class="{active: active('/about')}">
+                            <span class="glyphicon glyphicon-heart"></span> What's this?
+                        </button>
+                    </nav>
+                    <nav class="menu" ng-switch-when="true">                    
+                        <button type="button" class="btn btn-primary btn-lg" ng-click="locate('/words')" ng-class="{active: active('/words')}">
+                            <span class="glyphicon glyphicon-book"></span> All Words
+                        </button>
+                        <button type="button" class="btn btn-primary btn-lg" ng-click="locate('/newword')" ng-class="{active: active('/newword')}">
+                            <span class="glyphicon glyphicon-comment"></span> Add a Word
+                        </button>
+                    </nav>   
+                </div>
+                <div class="container-fluid" ng-view ng-animate="{enter: 'view-enter'}"></div>
             </div>
-            <div class="container-fluid" ng-view ng-animate="{enter: 'view-enter'}"></div>
-        </div>
+        </section>
         
         
         <!-- build:remove:dev -->

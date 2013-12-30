@@ -4,9 +4,46 @@ font-family: 'Just Me Again Down Here', cursive;
 font-family: 'Quando', serif;
 */
 
+#mainWrap {
+    margin: 0 auto;
+    background-color: #FFFFF8;
+  }
+
+@media (min-width:320px) {
+  /* smartphones, portrait iPhone, portrait 480x320 phones (Android) */
+
+  #mainWrap {
+    width: 320px;
+  }
+
+}
+@media (min-width:480px) {
+  /* smartphones, Android phones, landscape iPhone */ 
+  
+  #mainWrap {
+    width: 480px;
+  }
+  
+}
+@media (min-width:600px) {
+  /* portrait tablets, portrait iPad, e-readers (Nook/Kindle), landscape 800x480 phones (Android) */ 
+
+  #mainWrap {
+    width: 600px;
+  }
+
+}
+@media (min-width:801px) {
+  /* tablet, landscape iPad, lo-res laptops ands desktops */ 
+  
+  #mainWrap {
+    width: 800px;
+  }
+
+}
 
 body {
-  background-color: #FFFFF8;
+  background-color: #7ADBFF;
   padding: 0;
   font-family: 'Inder', sans-serif;
 }
@@ -24,6 +61,7 @@ body {
   list-style: none;
   margin-bottom: 2em;
   padding: 0 0 0.5em;
+  text-align: center;
 }
 
 .menu div {
@@ -68,6 +106,16 @@ body {
   padding: 5px;
   margin-bottom: 10px;
   font-size: 0.8em;
+}
+
+.ng-scope form{
+  padding: 0 40px 20px;
+  text-align: center;
+}
+
+.reset {
+  text-align: center;
+  margin: 15px 0 10px;
 }
 
 .ng-scope .page-header {
@@ -154,6 +202,8 @@ ul.wordList  {
   -webkit-border-radius: 6px 6px 6px 6px;
   border-radius: 6px 6px 6px 6px;
   border: 1px solid #3D3D3A;
+  padding: 10px;
+  text-align: center;
 }
 
 .ng-scope input.ng-invalid {
@@ -190,9 +240,8 @@ ul.wordList  {
 
 .deleteContainer{
   margin-top: 15px;
-  margin-bottom: 20px;
   text-align: center;
-  padding: 15px 0 0 0;
+  padding: 15px 0 15px 0;
   border-top: 1px dotted #FF654D;
 }
 

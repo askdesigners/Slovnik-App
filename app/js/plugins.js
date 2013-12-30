@@ -1,4 +1,4 @@
-/*! Slovnik - v - 2013-12-29
+/*! Slovnik - v - 2013-12-30
  * tellmesomethingnice.com
  * Copyright (c) 2013 Ryan Cole;
  * Licensed 
