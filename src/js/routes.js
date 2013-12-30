@@ -24,6 +24,10 @@ app.config(['$routeProvider', function ($routeProvider) {
         templateUrl: '/partials/about',
         controller: 'AboutCtrl'
     })
+    .when('/stats', {
+        templateUrl: '/partials/stats',
+        controller: 'StatsCtrl'
+    })
     .otherwise({
       redirectTo: '/login'
     }); 
