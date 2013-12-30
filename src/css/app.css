@@ -16,12 +16,20 @@ font-family: 'Quando', serif;
     width: 320px;
   }
 
+  .ng-scope form{
+    padding: 0 20px 20px !important;
+  }
+
 }
 @media (min-width:480px) {
   /* smartphones, Android phones, landscape iPhone */ 
   
   #mainWrap {
     width: 480px;
+  }
+
+  .ng-scope form{
+    padding: 0 20px 20px !important;
   }
   
 }
@@ -30,6 +38,10 @@ font-family: 'Quando', serif;
 
   #mainWrap {
     width: 600px;
+  }
+
+  .ng-scope form{
+    padding: 0 20px 20px !important;
   }
 
 }
