@@ -1,81 +1,91 @@
-/*! Slovnik - v - 2013-12-30
+/*! Slovnik - v - 2013-12-31
  * http://www.tellmesomethingnice.com
  * Copyright (c) 2013 Ryan Cole;
  * Licensed 
  */
 app.controller('EditWordCtrl', ['$scope', '$location', '$routeParams', 'wordsService', 'logger', 'messagesService', function($scope, $location, $routeParams, wordsService, logger, messagesService) {
 	'use strict';
+
+	if($scope.isLoggedIn === true){
 	
-	$scope.messages = messagesService.messages; 
+		$scope.messages = messagesService.messages; 
 
-	wordsService.get($routeParams.says)
+		wordsService.get($routeParams.says)
+			
+			.then(function (data){
+
+				$scope.query = $routeParams.says;
+				
+				$scope.wordExists = data.wordExists;
+				
+				$scope.word = data.word;
+				
+			}, function (error){
+
+				console.log(error);
+			
+			});
+
+		$scope.original = angular.copy($scope.word);
+
+		$scope.cancelEdit = function(){
+
+			$scope.word = angular.copy($scope.original);
+
+			$location.path('/word/' + $routeParams.says);		
 		
-		.then(function (data){
+		};
 
-			$scope.query = $routeParams.says;
-			
-			$scope.wordExists = data.wordExists;
-			
-			$scope.word = data.word;
-			
-		}, function (error){
+		$scope.saveEditedWord = function(word){
 
-			console.log(error);
+			word.addedby = $scope.email;
+			console.log($scope.email);
+			
+			wordsService.update($routeParams.says, word)
+			
+			.then(function (data){	
+
+				if(data.error === 1) {
+				
+					logger.error($scope.messages["word lost"]);
+				
+				} else {
+				
+					logger.success($scope.messages["word saved"]);
+				
+					$location.path('/word/' + data.word.says);
+				
+				}
+			
+			}, function (error){
+			
+				console.log(error);
+			
+			});
 		
-		});
+		};		
 
-	$scope.original = angular.copy($scope.word);
+		$scope.canSave = function(){
+			
+			if($scope.newWordForm.$valid && $scope.newWordForm.$dirty){
+			
+				return true;
+			
+			} else {
+			
+				return false;
+			
+			}
+		
+		};
 
-	$scope.cancelEdit = function(){
+	} else {
 
-		$scope.word = angular.copy($scope.original);
+		logger.error('You need to login to edit a word');
 
-		$location.path('/word/' + $routeParams.says);		
+		$location.path('/login');
 	
-	};
-
-    $scope.saveEditedWord = function(word){
-
-		word.addedby = $scope.email;
-		console.log($scope.email);
-		
-		wordsService.update($routeParams.says, word)
-		
-		.then(function (data){	
-
-			if(data.error === 1) {
-            
-                logger.error($scope.messages["word lost"]);
-            
-            } else {
-            
-                logger.success($scope.messages["word saved"]);
-            
-                $location.path('/word/' + data.word.says);
-            
-            }
-		
-		}, function (error){
-		
-			console.log(error);
-		
-		});
-    
-    };		
-
-	$scope.canSave = function(){
-		
-		if($scope.newWordForm.$valid && $scope.newWordForm.$dirty){
-		
-			return true;
-		
-		} else {
-		
-			return false;
-		
-		}
-	
-	};
+	}
 
 }]);
 app.controller('LoginCtrl',['$scope', '$rootScope', '$http', 'logger', 'messagesService',function($scope, $rootScope, $http, logger, messagesService){
@@ -198,55 +208,65 @@ app.controller('AboutCtrl', ['$scope', function($scope){
 app.controller('NewWordCtrl', ['$scope', '$location', 'wordsService', 'logger', 'messagesService', function($scope, $location, wordsService, logger, messagesService) {
 	'use strict';
 	
-	$scope.messages = messagesService.messages; 
+	if($scope.isLoggedIn === true){
 
-    $scope.saveWord = function(word){
-		
-		wordsService.create(word)
-		
-		.then(function (data){	
+		$scope.messages = messagesService.messages; 
 
-			if(data.error === 1) {
-            
-                logger.error($scope.messages["word lost"]);
-            
-            } else {
-            
-                logger.success($scope.messages["word saved"]);
-            
-                $location.path('/words');
-            
-            }
-		
-		}, function (error){
-		
-			console.log(error);
-		
-		});
-    
-    };	
+		$scope.saveWord = function(word){
+			
+			wordsService.create(word)
+			
+			.then(function (data){	
 
-    $scope.cancelCreate = function(){
+				if(data.error === 1) {
+				
+					logger.error($scope.messages["word lost"]);
+				
+				} else {
+				
+					logger.success($scope.messages["word saved"]);
+				
+					$location.path('/words');
+				
+				}
+			
+			}, function (error){
+			
+				console.log(error);
+			
+			});
+		
+		};	
 
-		$scope.word = {};
+		$scope.cancelCreate = function(){
 
-		$location.path('/words');		
-	
-	};	
+			$scope.word = {};
 
-	$scope.canSave = function(){
+			$location.path('/words');		
 		
-		if($scope.newWordForm.$valid && $scope.newWordForm.$dirty){
+		};	
+
+		$scope.canSave = function(){
+			
+			if($scope.newWordForm.$valid && $scope.newWordForm.$dirty){
+			
+				return true;
+			
+			} else {
+			
+				return false;
+			
+			}
 		
-			return true;
-		
-		} else {
-		
-			return false;
-		
-		}
-	
-	};
+		};
+
+	} else {
+
+		logger.error('You need to login to create a word');
+
+		$location.path('/login');
+
+	}
 
 }]);
 app.controller('SecureCtrl', ['$scope', function($scope){
@@ -256,10 +276,12 @@ app.controller('SecureCtrl', ['$scope', function($scope){
 	$scope.message = "Message from Secure Controller";
 	
 }]);
-app.controller('StatsCtrl', ['$scope', '$location', 'statsService', function($scope, $location, statsService) {
+app.controller('StatsCtrl', ['$scope', '$location', 'statsService', 'logger', function($scope, $location, statsService, logger) {
 	'use strict';
 
-	statsService()
+	if($scope.isLoggedIn === true){
+
+		statsService()
 		
 		.then(function (data){
 			
@@ -273,89 +295,115 @@ app.controller('StatsCtrl', ['$scope', '$location', 'statsService', function($sc
 		
 		});
 
+	} else {
+
+		logger.error('You need to login to see the stats page');
+
+		$location.path('/login');
+
+	}
+
 }]);
 app.controller('WordCtrl', ['$scope', '$routeParams', '$location', 'wordsService', 'logger', 'messagesService', function($scope, $routeParams, $location, wordsService, logger, messagesService) {
 	'use strict';
-    
-    $scope.messages = messagesService.messages; 
 
-    $scope.deleting = false;
-
-	wordsService.get($routeParams.says)
-		
-		.then(function (data){
-
-			$scope.query = $routeParams.says;
-			
-			$scope.wordExists = data.wordExists;
-			
-			$scope.word = data.word;
-			
-		}, function (error){
-
-			console.log(error);
-		
-		});
-
-	$scope.edit = function(){
-
-		$location.path('/edit/' + $routeParams.says);
+	if($scope.isLoggedIn === true){
 	
-	};
-
-	$scope.showDelete = function(){
-
-		$scope.deleting = true;
-
-	};
-
-	$scope.cancelDelete = function(){
+		$scope.messages = messagesService.messages; 
 
 		$scope.deleting = false;
 
-	};
+		wordsService.get($routeParams.says)
+			
+			.then(function (data){
 
-	$scope.deleteWord = function(){
+				$scope.query = $routeParams.says;
+				
+				$scope.wordExists = data.wordExists;
+				
+				$scope.word = data.word;
+				
+			}, function (error){
 
-		wordsService.removeWord($routeParams.says)
+				console.log(error);
+			
+			});
 
-			.then(function (data){	
+		$scope.edit = function(){
 
-			if(data.error === 1) {
-            
-                logger.error($scope.messages["delete failed"]);
-            
-            } else {
-            
-                logger.success($scope.messages["word deleted"]);
-            
-                $location.path('/words');
-            
-            }
+			$location.path('/edit/' + $routeParams.says);
+		
+		};
+
+		$scope.showDelete = function(){
+
+			$scope.deleting = true;
+
+		};
+
+		$scope.cancelDelete = function(){
+
+			$scope.deleting = false;
+
+		};
+
+		$scope.deleteWord = function(){
+
+			wordsService.removeWord($routeParams.says)
+
+				.then(function (data){	
+
+				if(data.error === 1) {
+				
+					logger.error($scope.messages["delete failed"]);
+				
+				} else {
+				
+					logger.success($scope.messages["word deleted"]);
+				
+					$location.path('/words');
+				
+				}
+			
+			}, function (error){
+			
+				console.log(error);
+			
+			});
+		};
+
+	} else {
+
+		logger.error('You need to login to see the definition page');
+
+		$location.path('/login');
+	}
+
+}]);
+app.controller('WordsCtrl', ['$scope', '$location', 'wordsService', 'logger', function($scope, $location, wordsService, logger) {
+	'use strict';
+
+	if($scope.isLoggedIn === true){
+
+		wordsService.query()
+			
+		.then(function (data){
+			
+			$scope.wordsExist = (data.wordCount > 0) ? true : false;
+		
+			$scope.wordsList = data.words;
 		
 		}, function (error){
 		
 			console.log(error);
 		
 		});
-	};
 
-}]);
-app.controller('WordsCtrl', ['$scope', 'wordsService', function($scope, wordsService) {
-	'use strict';
+	} else {
 
-	wordsService.query()
-		
-	.then(function (data){
-		
-		$scope.wordsExist = (data.wordCount > 0) ? true : false;
-	
-		$scope.wordsList = data.words;
-	
-	}, function (error){
-	
-		console.log(error);
-	
-	});
+		logger.error('You need to login to see the words list');
+
+		$location.path('/login');
+	}
 
 }]);

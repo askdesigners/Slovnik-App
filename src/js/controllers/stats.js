@@ -1,7 +1,9 @@
-app.controller('StatsCtrl', ['$scope', '$location', 'statsService', function($scope, $location, statsService) {
+app.controller('StatsCtrl', ['$scope', '$location', 'statsService', 'logger', function($scope, $location, statsService, logger) {
 	'use strict';
 
-	statsService()
+	if($scope.isLoggedIn === true){
+
+		statsService()
 		
 		.then(function (data){
 			
@@ -14,5 +16,13 @@ app.controller('StatsCtrl', ['$scope', '$location', 'statsService', function($sc
 			console.log(error);
 		
 		});
+
+	} else {
+
+		logger.error('You need to login to see the stats page');
+
+		$location.path('/login');
+
+	}
 
 }]);

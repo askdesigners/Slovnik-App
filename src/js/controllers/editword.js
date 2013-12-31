@@ -1,75 +1,85 @@
 app.controller('EditWordCtrl', ['$scope', '$location', '$routeParams', 'wordsService', 'logger', 'messagesService', function($scope, $location, $routeParams, wordsService, logger, messagesService) {
 	'use strict';
+
+	if($scope.isLoggedIn === true){
 	
-	$scope.messages = messagesService.messages; 
+		$scope.messages = messagesService.messages; 
 
-	wordsService.get($routeParams.says)
+		wordsService.get($routeParams.says)
+			
+			.then(function (data){
+
+				$scope.query = $routeParams.says;
+				
+				$scope.wordExists = data.wordExists;
+				
+				$scope.word = data.word;
+				
+			}, function (error){
+
+				console.log(error);
+			
+			});
+
+		$scope.original = angular.copy($scope.word);
+
+		$scope.cancelEdit = function(){
+
+			$scope.word = angular.copy($scope.original);
+
+			$location.path('/word/' + $routeParams.says);		
 		
-		.then(function (data){
+		};
 
-			$scope.query = $routeParams.says;
-			
-			$scope.wordExists = data.wordExists;
-			
-			$scope.word = data.word;
-			
-		}, function (error){
+		$scope.saveEditedWord = function(word){
 
-			console.log(error);
+			word.addedby = $scope.email;
+			console.log($scope.email);
+			
+			wordsService.update($routeParams.says, word)
+			
+			.then(function (data){	
+
+				if(data.error === 1) {
+				
+					logger.error($scope.messages["word lost"]);
+				
+				} else {
+				
+					logger.success($scope.messages["word saved"]);
+				
+					$location.path('/word/' + data.word.says);
+				
+				}
+			
+			}, function (error){
+			
+				console.log(error);
+			
+			});
 		
-		});
+		};		
 
-	$scope.original = angular.copy($scope.word);
+		$scope.canSave = function(){
+			
+			if($scope.newWordForm.$valid && $scope.newWordForm.$dirty){
+			
+				return true;
+			
+			} else {
+			
+				return false;
+			
+			}
+		
+		};
 
-	$scope.cancelEdit = function(){
+	} else {
 
-		$scope.word = angular.copy($scope.original);
+		logger.error('You need to login to edit a word');
 
-		$location.path('/word/' + $routeParams.says);		
+		$location.path('/login');
 	
-	};
-
-    $scope.saveEditedWord = function(word){
-
-		word.addedby = $scope.email;
-		console.log($scope.email);
-		
-		wordsService.update($routeParams.says, word)
-		
-		.then(function (data){	
-
-			if(data.error === 1) {
-            
-                logger.error($scope.messages["word lost"]);
-            
-            } else {
-            
-                logger.success($scope.messages["word saved"]);
-            
-                $location.path('/word/' + data.word.says);
-            
-            }
-		
-		}, function (error){
-		
-			console.log(error);
-		
-		});
-    
-    };		
-
-	$scope.canSave = function(){
-		
-		if($scope.newWordForm.$valid && $scope.newWordForm.$dirty){
-		
-			return true;
-		
-		} else {
-		
-			return false;
-		
-		}
-	
-	};
+	}
 
 }]);

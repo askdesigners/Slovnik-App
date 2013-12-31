@@ -1,18 +1,27 @@
-app.controller('WordsCtrl', ['$scope', 'wordsService', function($scope, wordsService) {
+app.controller('WordsCtrl', ['$scope', '$location', 'wordsService', 'logger', function($scope, $location, wordsService, logger) {
 	'use strict';
 
-	wordsService.query()
+	if($scope.isLoggedIn === true){
+
+		wordsService.query()
+			
+		.then(function (data){
+			
+			$scope.wordsExist = (data.wordCount > 0) ? true : false;
 		
-	.then(function (data){
+			$scope.wordsList = data.words;
 		
-		$scope.wordsExist = (data.wordCount > 0) ? true : false;
-	
-		$scope.wordsList = data.words;
-	
-	}, function (error){
-	
-		console.log(error);
-	
-	});
+		}, function (error){
+		
+			console.log(error);
+		
+		});
+
+	} else {
+
+		logger.error('You need to login to see the words list');
+
+		$location.path('/login');
+	}
 
 }]);

@@ -1,67 +1,76 @@
 app.controller('WordCtrl', ['$scope', '$routeParams', '$location', 'wordsService', 'logger', 'messagesService', function($scope, $routeParams, $location, wordsService, logger, messagesService) {
 	'use strict';
-    
-    $scope.messages = messagesService.messages; 
 
-    $scope.deleting = false;
-
-	wordsService.get($routeParams.says)
-		
-		.then(function (data){
-
-			$scope.query = $routeParams.says;
-			
-			$scope.wordExists = data.wordExists;
-			
-			$scope.word = data.word;
-			
-		}, function (error){
-
-			console.log(error);
-		
-		});
-
-	$scope.edit = function(){
-
-		$location.path('/edit/' + $routeParams.says);
+	if($scope.isLoggedIn === true){
 	
-	};
-
-	$scope.showDelete = function(){
-
-		$scope.deleting = true;
-
-	};
-
-	$scope.cancelDelete = function(){
+		$scope.messages = messagesService.messages; 
 
 		$scope.deleting = false;
 
-	};
+		wordsService.get($routeParams.says)
+			
+			.then(function (data){
 
-	$scope.deleteWord = function(){
+				$scope.query = $routeParams.says;
+				
+				$scope.wordExists = data.wordExists;
+				
+				$scope.word = data.word;
+				
+			}, function (error){
 
-		wordsService.removeWord($routeParams.says)
+				console.log(error);
+			
+			});
 
-			.then(function (data){	
+		$scope.edit = function(){
 
-			if(data.error === 1) {
-            
-                logger.error($scope.messages["delete failed"]);
-            
-            } else {
-            
-                logger.success($scope.messages["word deleted"]);
-            
-                $location.path('/words');
-            
-            }
+			$location.path('/edit/' + $routeParams.says);
 		
-		}, function (error){
-		
-			console.log(error);
-		
-		});
-	};
+		};
+
+		$scope.showDelete = function(){
+
+			$scope.deleting = true;
+
+		};
+
+		$scope.cancelDelete = function(){
+
+			$scope.deleting = false;
+
+		};
+
+		$scope.deleteWord = function(){
+
+			wordsService.removeWord($routeParams.says)
+
+				.then(function (data){	
+
+				if(data.error === 1) {
+				
+					logger.error($scope.messages["delete failed"]);
+				
+				} else {
+				
+					logger.success($scope.messages["word deleted"]);
+				
+					$location.path('/words');
+				
+				}
+			
+			}, function (error){
+			
+				console.log(error);
+			
+			});
+		};
+
+	} else {
+
+		logger.error('You need to login to see the definition page');
+
+		$location.path('/login');
+	}
 
 }]);

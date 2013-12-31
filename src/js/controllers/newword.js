@@ -1,54 +1,64 @@
 app.controller('NewWordCtrl', ['$scope', '$location', 'wordsService', 'logger', 'messagesService', function($scope, $location, wordsService, logger, messagesService) {
 	'use strict';
 	
-	$scope.messages = messagesService.messages; 
+	if($scope.isLoggedIn === true){
 
-    $scope.saveWord = function(word){
-		
-		wordsService.create(word)
-		
-		.then(function (data){	
+		$scope.messages = messagesService.messages; 
 
-			if(data.error === 1) {
-            
-                logger.error($scope.messages["word lost"]);
-            
-            } else {
-            
-                logger.success($scope.messages["word saved"]);
-            
-                $location.path('/words');
-            
-            }
-		
-		}, function (error){
-		
-			console.log(error);
-		
-		});
-    
-    };	
+		$scope.saveWord = function(word){
+			
+			wordsService.create(word)
+			
+			.then(function (data){	
 
-    $scope.cancelCreate = function(){
+				if(data.error === 1) {
+				
+					logger.error($scope.messages["word lost"]);
+				
+				} else {
+				
+					logger.success($scope.messages["word saved"]);
+				
+					$location.path('/words');
+				
+				}
+			
+			}, function (error){
+			
+				console.log(error);
+			
+			});
+		
+		};	
 
-		$scope.word = {};
+		$scope.cancelCreate = function(){
 
-		$location.path('/words');		
-	
-	};	
+			$scope.word = {};
 
-	$scope.canSave = function(){
+			$location.path('/words');		
 		
-		if($scope.newWordForm.$valid && $scope.newWordForm.$dirty){
+		};	
+
+		$scope.canSave = function(){
+			
+			if($scope.newWordForm.$valid && $scope.newWordForm.$dirty){
+			
+				return true;
+			
+			} else {
+			
+				return false;
+			
+			}
 		
-			return true;
-		
-		} else {
-		
-			return false;
-		
-		}
-	
-	};
+		};
+
+	} else {
+
+		logger.error('You need to login to create a word');
+
+		$location.path('/login');
+
+	}
 
 }]);
