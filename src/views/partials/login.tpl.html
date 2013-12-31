@@ -18,7 +18,7 @@
         </div>
         <div class="control-group">
             <div class="controls">
-                <input type="submit" value="Login" id="da-login-submit" class="btn btn-success" 
+                <input type="submit" value="Login" id="da-login-submit" class="btn btn-success btn-block loginButton" 
                     ng-disabled="!canSubmit()" ng-click="login(user.email, user.password)">
             </div>
         </div>
@@ -46,7 +46,7 @@
         </div>
         <div class="control-group">
             <div class="controls">
-                <input type="submit" value="Submit" class="btn btn-success" 
+                <input type="submit" value="Submit" class="btn btn-success btn-block loginButton" 
                 ng-disabled="!canSubmit()"
                 ng-click="createUser(newUser.email, newUser.password, selectedRole)">
             </div>

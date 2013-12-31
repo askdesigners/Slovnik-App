@@ -5,13 +5,13 @@ font-family: 'Quando', serif;
 */
 
 #mainWrap {
-    margin: 0 auto;
-    background-color: #FFFFF8;
-  }
+  margin: 0 auto;
+  background-color: #FFFFF8;
+}
 
-  .statsButton {
-    display: inline-block;
-  }
+.statsButton {
+  display: inline-block;
+}
 
 @media (min-width:320px) {
   /* smartphones, portrait iPhone, portrait 480x320 phones (Android) */
@@ -26,6 +26,10 @@ font-family: 'Quando', serif;
 
   .statsButton {
     display: none;
+  }
+
+  .about {
+    width: 100%;
   }
 
 }
@@ -44,6 +48,10 @@ font-family: 'Quando', serif;
     display: inline-block;
   }
 
+  .about {
+    width: 80%;
+  }
+
 }
 @media (min-width:600px) {
   /* portrait tablets, portrait iPad, e-readers (Nook/Kindle), landscape 800x480 phones (Android) */ 
@@ -60,6 +68,10 @@ font-family: 'Quando', serif;
     display: inline-block;
   }
 
+  .about {
+    width: 80%;
+  }
+
 }
 @media (min-width:801px) {
   /* tablet, landscape iPad, lo-res laptops ands desktops */ 
@@ -70,6 +82,10 @@ font-family: 'Quando', serif;
 
   .statsButton {
     display: inline-block;
+  }
+
+  .about {
+    width: 80%;
   }
 
 }
@@ -86,6 +102,12 @@ body {
 
 .loginRegButton {
   text-align: center;
+}
+
+.about {
+  max-width: 500px;
+  margin: 0 auto;
+  padding: 0 0 20px 0;
 }
 
 .about h5{
@@ -234,7 +256,7 @@ ul.wordList  {
   float: none;
 }
 
-.ng-scope input[type="text"]{
+.ng-scope input[type="text"], .ng-scope input[type="email"], .ng-scope input[type="password"]{
   -webkit-border-radius: 6px 6px 6px 6px;
   border-radius: 6px 6px 6px 6px;
   border: 1px solid #3D3D3A;
@@ -242,6 +264,12 @@ ul.wordList  {
   text-align: center;
   width: 100% !important;
   max-width: 500px !important;
+  margin: 0 auto;
+}
+
+.loginButton {
+  max-width: 500px;
+  margin: 0 auto;
 }
 
 .ng-scope textarea{
