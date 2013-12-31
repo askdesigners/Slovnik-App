@@ -1,0 +1,17 @@
+<div class="statsPanel">
+	<p class="wordCountLabel">Number of words</p>
+	<h3 class="wordCount">{{stats.number_words}}</h3>
+	<section class="percentHolder">
+		<p class="percentLabel">English</p>
+		<h3 class="percent">{{stats.number_english}} – {{stats.percent_english}}%</h3>
+	</section>
+	<section class="percentHolder">
+		<p class="percentLabel">Czech</p>
+		<h3 class="percent">{{stats.number_czech}} – {{stats.percent_czech}}%</h3>
+	</section>
+	
+	<p class="userCount">There are {{stats.number_users}} users.</p>
+	<ul class="userList">
+		<li ng-repeat="user in stats.users">{{user.email}}</li>
+	</ul>
+</div>
