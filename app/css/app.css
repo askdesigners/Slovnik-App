@@ -9,6 +9,10 @@ font-family: 'Quando', serif;
     background-color: #FFFFF8;
   }
 
+  .statsButton {
+    display: inline-block;
+  }
+
 @media (min-width:320px) {
   /* smartphones, portrait iPhone, portrait 480x320 phones (Android) */
 
@@ -18,6 +22,10 @@ font-family: 'Quando', serif;
 
   .ng-scope form{
     padding: 0 20px 20px !important;
+  }
+
+  .statsButton {
+    display: none;
   }
 
 }
@@ -31,7 +39,11 @@ font-family: 'Quando', serif;
   .ng-scope form{
     padding: 0 20px 20px !important;
   }
-  
+
+  .statsButton {
+    display: inline-block;
+  }
+
 }
 @media (min-width:600px) {
   /* portrait tablets, portrait iPad, e-readers (Nook/Kindle), landscape 800x480 phones (Android) */ 
@@ -44,12 +56,20 @@ font-family: 'Quando', serif;
     padding: 0 20px 20px !important;
   }
 
+  .statsButton {
+    display: inline-block;
+  }
+
 }
 @media (min-width:801px) {
   /* tablet, landscape iPad, lo-res laptops ands desktops */ 
   
   #mainWrap {
     width: 800px;
+  }
+
+  .statsButton {
+    display: inline-block;
   }
 
 }
@@ -224,6 +244,16 @@ ul.wordList  {
   max-width: 500px !important;
 }
 
+.ng-scope textarea{
+  -webkit-border-radius: 6px 6px 6px 6px;
+  border-radius: 6px 6px 6px 6px;
+  border: 1px solid #3D3D3A;
+  padding: 10px;
+  width: 100% !important;
+  max-width: 500px !important;
+  margin: 0 auto;
+}
+
 .ng-scope input.ng-invalid {
   border: 1px solid #FF654D;
 }
@@ -266,4 +296,55 @@ ul.wordList  {
 .ng-scope .btn.showDelete{
   background-color: transparent;
   color: #FF654D;
+}
+
+.wordCountLabel {
+  border-bottom: 1px dotted #FF654D;
+  text-align: center;
+}
+
+.wordCount {
+  font-size: 3em;
+  color: #FF654D;
+  text-align: center;
+  margin: 0px 0 20px 0;
+}
+
+.percentHolder {
+  width: 49%;
+  display: inline-block;
+}
+
+.percentHolder p{
+  width: 50%;
+  margin: 0 auto;
+  padding-bottom: 5px;
+  border-bottom: 1px dotted #FF654D;
+  text-align: center;
+}
+
+.percentHolder h3 {
+  font-size: 2em;
+  color: #FF654D;
+  text-align: center;
+  margin: 5px 0 0 0;
+}
+
+.percentHolder h4 {
+  font-size: 1em;
+  color: #FF654D;
+  text-align: center;
+  margin: 15px 0 0 0;
+}
+
+.userCount {
+  margin-top: 20px;
+  border-bottom: 1px dotted #FF654D;
+  text-align: center;
+}
+
+.userList {
+  list-style: none;
+  text-align: center;
+  padding: 0 0 20px 0;
 }

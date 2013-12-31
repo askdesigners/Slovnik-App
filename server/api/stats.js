@@ -56,7 +56,11 @@ exports.getStats = function (req, res) {
             
             stats.percent_czech = (numberCzech / numberWords) * 100;
 
+            stats.percent_czech = stats.percent_czech.toFixed(2);
+
             stats.percent_english = (numberEnglish / numberWords) * 100;
+
+            stats.percent_english = stats.percent_english.toFixed(2);
 
             // now that words are counted go get the users
 
