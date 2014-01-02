@@ -106,6 +106,8 @@ exports.getActiveUser = function (req, res) {
 
             returnedUser.email = user.email;
 
+            returnedUser.language = user.language;
+
             res.send({ loggedIn: 1, user: returnedUser}, 201);
 
         });
