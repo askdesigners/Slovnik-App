@@ -10,6 +10,7 @@ var UserSchema = new Schema({
         type: String,
         required: true
     },
+    language: String,
     username: String,
     confirmed: Boolean, //registered users need to confirm registration
     confirmationstring: String, //guide for user to confirm registration

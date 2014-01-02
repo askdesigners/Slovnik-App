@@ -37,9 +37,11 @@ app.controller('LoginCtrl',['$scope', '$rootScope', '$http', 'logger', 'messages
         }
     };
 
-    $scope.createUser = function(email, password, role) {
+    $scope.createUser = function(email, password, language) {
 
-        var request = $http.post('/register', {email: email, password: password, role: role});
+        console.log(email + ":" + password + ":" + language);
+        
+        var request = $http.post('/register', {email: email, password: password, language: language});
 
         return request.then(function(response) {
             if(response.data.error === 1) {
@@ -47,6 +49,8 @@ app.controller('LoginCtrl',['$scope', '$rootScope', '$http', 'logger', 'messages
             }
             else {
                 logger.success(response.data.user + $scope.messages["registerSuccess"]);
+
+                $scope.login(email, password);
             }
         });
     };    
@@ -58,7 +62,7 @@ app.controller('LoginCtrl',['$scope', '$rootScope', '$http', 'logger', 'messages
 
 app.controller('RootCtrl', ['$scope', '$location', '$http', 'logger', function($scope, $location, $http, logger) {
     'use strict';
-    var request = $http.get('/getUserDetails');
+    var request = $http.get('/getActiveUser');
 
     request.then(function(response) {
         if(response.data.loggedIn === 1) {
@@ -81,9 +85,11 @@ app.controller('RootCtrl', ['$scope', '$location', '$http', 'logger', function($
         } else {
             return false;
         }
-    }
+    };
 
     $scope.login = function(email, password) {
+
+        console.log('login');
 
         var request = $http.post('/login', {email: email, password: password});
 
@@ -106,7 +112,7 @@ app.controller('RootCtrl', ['$scope', '$location', '$http', 'logger', function($
             $scope.isLoggedIn = false;
             window.location.href = '/';
         });
-    }    
+    };    
 
 }]);
 

@@ -30,6 +30,18 @@ app.config(['$routeProvider', function ($routeProvider) {
         templateUrl: '/partials/about',
         controller: 'AboutCtrl'
     })
+    .when('/users', {
+        templateUrl: '/partials/usersList',
+        controller: 'UsersCtrl'
+    })
+    .when('/user/:email', {
+        templateUrl: '/partials/user',
+        controller: 'UserCtrl'
+    })
+    .when('/edituser/:email', {
+        templateUrl: '/partials/edituser',
+        controller: 'EditUserCtrl'
+    })
     .when('/stats', {
         templateUrl: '/partials/stats',
         controller: 'StatsCtrl'
