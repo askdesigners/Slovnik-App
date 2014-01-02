@@ -130,8 +130,7 @@ exports.getWordDetails = function (req, res) {
 };
 
 exports.getAllWords = function (req, res) {
-    var getWords = Word.find({}),
-        returnedWord = {};
+    var getWords = Word.find({});
 
     getWords.exec(function (err, words) {
         if (err) {

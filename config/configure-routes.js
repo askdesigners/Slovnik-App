@@ -12,13 +12,17 @@ function configureRoutes(passport) {
     app.get('/partials/:name', routes.partials);
     app.post('/register', routes.register);
     app.get('/login', routes.login);
-    app.get('/getUserDetails', routes.getUserDetails);
     app.get('/words', routes.getAllWords);
     app.put('/word/:says', routes.newWord);
     app.post('/word/:says', routes.editWord);
     app.get('/word/:says', routes.getWordDetails);
     app.delete('/word/:says', routes.deleteWord);
     app.get('/stats', routes.getStats);
+    app.get('/getUserDetails', routes.getUserDetails);
+    app.get('/users', routes.getAllUsers);
+    app.post('/user/:email', routes.editUser);
+    app.get('/user/:email', routes.getUserDetails);
+    app.delete('/user/:email', routes.deleteUser);
 
 
     app.post('/login', function(req, res, next) {

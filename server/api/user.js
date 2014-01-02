@@ -79,3 +79,79 @@ exports.getUserDetails = function (req, res) {
         });
     }   
 };
+
+exports.getAllUsers = function (req, res) {
+
+    var getUsers = User.find({});
+
+    getUsers.exec(function (err, users) {
+        if (err) {
+            res.send("Could not retrieve user list", 400);
+        } else {
+            res.send({'userCount':users.length, 'users':users});
+        }
+    });
+
+};
+
+exports.deleteUser = function (req, res){
+if(!req.params.email) {
+        res.send({ userDeleted: 0 }, 200);
+    }
+    else {
+        var removeUser = User.findOneAndRemove({ 'email': req.params.email });
+
+        removeUser.exec(function (err, user) {
+            if (err) {
+                res.send("Could not remove the user", 400);
+            }
+
+            res.send({ userDeleted: 1 }, 201);
+        });
+    }
+};
+
+exports.editUser = function (req, res) {
+    
+    if(!req.params.email) {
+    
+        res.send({ userExists: 0 }, 200);
+    
+    }
+    
+    else {
+    
+        var getUser = User.findOne({ 'email': req.params.email });
+    
+        getUser.exec(function (err, user) {
+    
+            if (err) {
+    
+                res.send("Could not retrieve user's details", 400);
+    
+            }
+
+            user.email = req.body.email;
+            user.name = req.body.name;
+            user.language = req.body.language;
+            user.password = req.body.password;
+
+            word.save(function (err) {
+                if (!err) { 
+
+                    console.log("updated" + user.email);
+
+                    res.send({ userUpdated: 1, user: user }, 201);
+
+                } else { 
+
+                    console.log(err); 
+
+                    res.send({ userUpdated: 0, user: user }, 201);
+                
+                }
+            });
+        });
+    }   
+
+};

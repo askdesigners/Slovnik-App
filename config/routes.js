@@ -43,6 +43,14 @@ exports.getUserDetails = function (req, res) {
     api.user.getUserDetails(req, res);
 };
 
+exports.getAllUsers = function (req, res) {
+    api.user.getAllUsers(req, res);
+};
+
+exports.editUser = function (req, res) {
+    api.user.editUser(req, res);
+};
+
 exports.newWord = function (req, res) {
     api.word.createWord(req, res);
 };

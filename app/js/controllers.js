@@ -1,6 +1,6 @@
-/*! Slovnik - v - 2013-12-31
+/*! Slovnik - v - 2014-01-02
  * http://www.tellmesomethingnice.com
- * Copyright (c) 2013 Ryan Cole;
+ * Copyright (c) 2014 Ryan Cole;
  * Licensed 
  */
 app.controller('EditWordCtrl', ['$scope', '$location', '$routeParams', 'wordsService', 'logger', 'messagesService', function($scope, $location, $routeParams, wordsService, logger, messagesService) {
