@@ -1,0 +1,8 @@
+<ul ng-show="usersExist" class="usersList">
+	<li ng-repeat="user in usersList | object2Array | orderBy:'email'" >
+		<a href="/#/user/{{user.email}}">{{user.email}}</a>
+	</li>
+</ul>
+<div ng-show="!usersExist">
+	<h4 class="noWords">There are no users yet!</h4>
+</div>

@@ -1,8 +1,103 @@
-/*! Slovnik - v - 2013-12-31
+/*! Slovnik - v - 2014-01-02
  * http://www.tellmesomethingnice.com
- * Copyright (c) 2013 Ryan Cole;
+ * Copyright (c) 2014 Ryan Cole;
  * Licensed 
  */
+app.controller('EditUserCtrl', ['$scope', '$location', '$routeParams', 'usersService', 'logger', 'messagesService', function($scope, $location, $routeParams, usersService, logger, messagesService) {
+	'use strict';
+
+	if($scope.isLoggedIn === true){
+	
+		$scope.messages = messagesService.messages; 
+
+		usersService.get($routeParams.email)
+			
+			.then(function (data){
+
+				$scope.query = $routeParams.email;
+				
+				$scope.userExists = data.userExists;
+				
+				$scope.user = data.user;
+
+				$scope.user.password = ''; 
+
+				$scope.user.repeatPassword = '';
+				
+			}, function (error){
+
+				console.log(error);
+			
+			});
+
+		$scope.original = angular.copy($scope.user);
+
+
+		$scope.cancelEdit = function(){
+
+			$scope.user = angular.copy($scope.original);
+
+			$location.path('/user/' + $routeParams.email);		
+		
+		};
+
+
+		$scope.checkMatch = function() {
+		
+			if($scope.user) return $scope.user.password !== $scope.user.repeatPassword;
+		
+		}; 
+
+
+		$scope.saveEditedUser = function(user){
+			
+			usersService.update($routeParams.email, user)
+			
+			.then(function (data){	
+
+				if(data.error === 1) {
+				
+					logger.error("Couldn't update the user");
+				
+				} else {
+				
+					logger.success("User updated");
+				
+					$location.path('/user/' + data.user.email);
+				
+				}
+			
+			}, function (error){
+			
+				console.log(error);
+			
+			});
+		
+		};		
+
+		$scope.canSave = function(){
+			
+			if($scope.newUserForm.$valid && $scope.newUserForm.$dirty){
+			
+				return true;
+			
+			} else {
+			
+				return false;
+			
+			}
+		
+		};
+
+	} else {
+
+		logger.error('You need to login to edit a user');
+
+		$location.path('/login');
+	
+	}
+
+}]);
 app.controller('EditWordCtrl', ['$scope', '$location', '$routeParams', 'wordsService', 'logger', 'messagesService', function($scope, $location, $routeParams, wordsService, logger, messagesService) {
 	'use strict';
 
@@ -127,9 +222,11 @@ app.controller('LoginCtrl',['$scope', '$rootScope', '$http', 'logger', 'messages
         }
     };
 
-    $scope.createUser = function(email, password, role) {
+    $scope.createUser = function(email, password, language) {
 
-        var request = $http.post('/register', {email: email, password: password, role: role});
+        console.log(email + ":" + password + ":" + language);
+        
+        var request = $http.post('/register', {email: email, password: password, language: language});
 
         return request.then(function(response) {
             if(response.data.error === 1) {
@@ -137,6 +234,8 @@ app.controller('LoginCtrl',['$scope', '$rootScope', '$http', 'logger', 'messages
             }
             else {
                 logger.success(response.data.user + $scope.messages["registerSuccess"]);
+
+                $scope.login(email, password);
             }
         });
     };    
@@ -148,7 +247,7 @@ app.controller('LoginCtrl',['$scope', '$rootScope', '$http', 'logger', 'messages
 
 app.controller('RootCtrl', ['$scope', '$location', '$http', 'logger', function($scope, $location, $http, logger) {
     'use strict';
-    var request = $http.get('/getUserDetails');
+    var request = $http.get('/getActiveUser');
 
     request.then(function(response) {
         if(response.data.loggedIn === 1) {
@@ -171,9 +270,11 @@ app.controller('RootCtrl', ['$scope', '$location', '$http', 'logger', function($
         } else {
             return false;
         }
-    }
+    };
 
     $scope.login = function(email, password) {
+
+        console.log('login');
 
         var request = $http.post('/login', {email: email, password: password});
 
@@ -196,7 +297,7 @@ app.controller('RootCtrl', ['$scope', '$location', '$http', 'logger', function($
             $scope.isLoggedIn = false;
             window.location.href = '/';
         });
-    }    
+    };    
 
 }]);
 
@@ -301,6 +402,113 @@ app.controller('StatsCtrl', ['$scope', '$location', 'statsService', 'logger', fu
 
 		$location.path('/login');
 
+	}
+
+}]);
+app.controller('UserCtrl', ['$scope', '$routeParams', '$location', 'usersService', 'logger', 'messagesService', function($scope, $routeParams, $location, usersService, logger, messagesService) {
+	'use strict';
+
+	if($scope.isLoggedIn === true){
+	
+		$scope.messages = messagesService.messages; 
+
+		$scope.deleting = false;
+
+		console.log($routeParams.email);
+
+		usersService.get($routeParams.email)
+			
+			.then(function (data){
+
+				console.log(data);
+
+				$scope.query = $routeParams.email;
+				
+				$scope.userExists = data.userExists;
+				
+				$scope.user = data.user;
+
+			}, function (error){
+
+				console.log(error);
+			
+			});
+
+		$scope.edit = function(){
+
+			$location.path('/edituser/' + $routeParams.email);
+		
+		};
+
+		$scope.showDelete = function(){
+
+			$scope.deleting = true;
+
+		};
+
+		$scope.cancelDelete = function(){
+
+			$scope.deleting = false;
+
+		};
+
+		$scope.deleteUser = function(){
+
+			usersService.removeUser($routeParams.email)
+
+				.then(function (data){	
+
+				if(data.error === 1) {
+				
+					logger.error("The user couldn't be deleted!");
+				
+				} else {
+				
+					logger.success("The user was deleted!");
+				
+					$location.path('/users');
+				
+				}
+			
+			}, function (error){
+			
+				console.log(error);
+			
+			});
+		};
+
+	} else {
+
+		logger.error('You need to login to see a users profile');
+
+		$location.path('/login');
+	}
+
+}]);
+app.controller('UsersCtrl', ['$scope', '$location', 'usersService', 'logger', function($scope, $location, usersService, logger) {
+	'use strict';
+
+	if($scope.isLoggedIn === true){
+
+		usersService.query()
+			
+		.then(function (data){
+			
+			$scope.usersExist = (data.userCount > 0) ? true : false;
+		
+			$scope.usersList = data.users;
+		
+		}, function (error){
+		
+			console.log(error);
+		
+		});
+
+	} else {
+
+		logger.error('You need to login to see the users list');
+
+		$location.path('/login');
 	}
 
 }]);

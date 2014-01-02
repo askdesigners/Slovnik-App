@@ -1,10 +1,10 @@
-app.factory('wordsService', ['$http', '$resource', '$q', function ($http, $resource, $q) {
+app.factory('usersService', ['$http', '$resource', '$q', function ($http, $resource, $q) {
 
-	var wordsResource = $resource('words', 
+	var usersResource = $resource('users', 
 		{}, 
 		{ 'query' : {method: 'GET', isArray: false, cache: false} });
 
-	var wordResource = $resource('word/:says', {says: '@says'},
+	var userResource = $resource('user/:email', {email: '@email'},
 		{
 			'get': {method: 'GET', isArray: false, cache: false},
 			'create': {method: 'PUT'},
@@ -15,15 +15,15 @@ app.factory('wordsService', ['$http', '$resource', '$q', function ($http, $resou
 	var factory = {
 		query : function () {
 			var deferred = $q.defer();
-			wordsResource.query({},
+			usersResource.query({},
 			function (resp) {
 				deferred.resolve(resp);
 			});
 			return deferred.promise;
 		},
-		get: function (says) {
+		get: function (email) {
 			var deferred = $q.defer();
-			wordResource.get({says: says},
+			userResource.get({email : email},
 			function (resp) {
 				deferred.resolve(resp);
 			});
@@ -31,25 +31,25 @@ app.factory('wordsService', ['$http', '$resource', '$q', function ($http, $resou
 		},
 		create: function (payload) {
 			var deferred = $q.defer();
-			wordResource.create(payload,
+			userResource.create(payload,
 			function (resp) {
 				deferred.resolve(resp);
 			});
 			return deferred.promise;
 		},
-		update: function (says, payload) {
+		update: function (email, payload) {
 			var deferred = $q.defer();
-			wordResource.update({says: says}, payload,
+			userResource.update({email : email}, payload,
 			function (resp) {
 				deferred.resolve(resp);
 			});
 			return deferred.promise;
 		},
-		removeWord : function (payload) {
-			console.log('remove: '+ payload);
+		removeUser : function (payload) {
+			// console.log('remove: '+ payload);
 	
 			var deferred = $q.defer();
-			wordResource.remove({says: payload},
+			userResource.remove({email: payload},
 			function (resp) {
 				deferred.resolve(resp);
 			});

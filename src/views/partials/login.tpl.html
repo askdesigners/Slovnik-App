@@ -45,10 +45,23 @@
             </div>
         </div>
         <div class="control-group">
+            <label for="language" class="control-label">Language / Jazyk</label>
+            <div class="controls">
+                <label class="radio inline">
+                    <input type="radio" name="language" value="czech" ng-model="newUser.language" required>
+                    czech
+                </label>
+                <label class="radio inline">
+                    <input type="radio" name="language" value="english" ng-model="newUser.language" required>
+                    english
+                </label>
+            </div>
+        </div>
+        <div class="control-group">
             <div class="controls">
                 <input type="submit" value="Submit" class="btn btn-success btn-block loginButton" 
                 ng-disabled="!canSubmit()"
-                ng-click="createUser(newUser.email, newUser.password, selectedRole)">
+                ng-click="createUser(newUser.email, newUser.password, newUser.language)">
             </div>
         </div>
     </form>    

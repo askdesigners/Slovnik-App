@@ -130,31 +130,49 @@ exports.getWordDetails = function (req, res) {
 };
 
 exports.getAllWords = function (req, res) {
-    var getWords = Word.find({}),
-        returnedWord = {};
+
+    var getWords = Word.find({});
 
     getWords.exec(function (err, words) {
+
         if (err) {
+
             res.send("Could not retrieve word list", 400);
+
         } else {
+
             res.send({'wordCount':words.length, 'words':words});
+
         }
+
     });
+
 };
 
 exports.deleteWord = function (req, res){
+
 if(!req.params.says) {
+
         res.send({ wordDeleted: 0 }, 200);
+
     }
+
     else {
+
         var removeWord = Word.findOneAndRemove({ 'says': req.params.says });
 
         removeWord.exec(function (err, word) {
+
             if (err) {
+
                 res.send("Could not remove the word", 400);
+
             }
 
             res.send({ wordDeleted: 1 }, 201);
+
         });
+
     }
+
 };

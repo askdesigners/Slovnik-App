@@ -39,8 +39,24 @@ exports.logout = function (req, res) {
     res.send('OK', 201);
 };
 
-exports.getUserDetails = function (req, res) {
-    api.user.getUserDetails(req, res);
+exports.getActiveUser = function (req, res) {
+    api.user.getActiveUser(req, res);
+};
+
+exports.getSingleUser = function (req, res) {
+    api.user.getSingleUser(req, res);
+};
+
+exports.getAllUsers = function (req, res) {
+    api.user.getAllUsers(req, res);
+};
+
+exports.editUser = function (req, res) {
+    api.user.editUser(req, res);
+};
+
+exports.deleteUser = function (req, res) {
+    api.user.deleteUser(req, res);
 };
 
 exports.newWord = function (req, res) {
