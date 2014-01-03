@@ -1,10 +1,12 @@
-/*! Slovnik - v - 2014-01-02
+/*! Slovnik - v - 2014-01-03
  * http://www.tellmesomethingnice.com
  * Copyright (c) 2014 Ryan Cole;
  * Licensed 
  */
-app.controller('EditUserCtrl', ['$scope', '$location', '$routeParams', 'usersService', 'logger', 'messagesService', function($scope, $location, $routeParams, usersService, logger, messagesService) {
+app.controller('EditUserCtrl', ['$scope', '$location', '$routeParams', 'usersService', 'langService', 'logger', 'messagesService', function($scope, $location, $routeParams, usersService, langService, logger, messagesService) {
 	'use strict';
+
+	$scope.l = langService.language();
 
 	if($scope.isLoggedIn === true){
 	
@@ -62,6 +64,8 @@ app.controller('EditUserCtrl', ['$scope', '$location', '$routeParams', 'usersSer
 				} else {
 				
 					logger.success("User updated");
+
+					langService.setLang(data.user.language);
 				
 					$location.path('/user/' + data.user.email);
 				
@@ -98,8 +102,10 @@ app.controller('EditUserCtrl', ['$scope', '$location', '$routeParams', 'usersSer
 	}
 
 }]);
-app.controller('EditWordCtrl', ['$scope', '$location', '$routeParams', 'wordsService', 'logger', 'messagesService', function($scope, $location, $routeParams, wordsService, logger, messagesService) {
+app.controller('EditWordCtrl', ['$scope', '$location', '$routeParams', 'wordsService', 'langService', 'logger', 'messagesService', function($scope, $location, $routeParams, wordsService, langService, logger, messagesService) {
 	'use strict';
+
+	$scope.l = langService.language();
 
 	if($scope.isLoggedIn === true){
 	
@@ -183,93 +189,181 @@ app.controller('EditWordCtrl', ['$scope', '$location', '$routeParams', 'wordsSer
 	}
 
 }]);
-app.controller('LoginCtrl',['$scope', '$rootScope', '$http', 'logger', 'messagesService',function($scope, $rootScope, $http, logger, messagesService){
+app.controller('LoginCtrl',['$scope', '$rootScope', '$http', 'langService', 'logger', 'messagesService', function($scope, $rootScope, $http, langService, logger, messagesService){
     'use strict';
+
+
+    $scope.l = langService.language();
+ 
     $scope.messages = messagesService.messages; 
 
     $scope.user = {};
+ 
     $scope.newUser = {};
+ 
     $scope.isLogin = true;
+ 
     $scope.buttonText = $scope.messages["register"];
 
-    $scope.toggleLogin = function() {
-        if($scope.isLogin) {
-            $scope.isLogin = false;
-            $scope.buttonText = $scope.messages["login"];
-        }
-        else {
-            $scope.isLogin = true;
-            $scope.buttonText = $scope.messages["register"];
-        }
+    $scope.changeLang = function(){
+
+        langService.setLang($scope.newUser.language);
+
+        $scope.l = langService.language();
+    
     };
+
+    $scope.toggleLogin = function() {
+
+        if($scope.isLogin) {
+
+            $scope.isLogin = false;
+
+            $scope.buttonText = $scope.l.btnNotReg;
+
+        }
+
+        else {
+
+            $scope.isLogin = true;
+
+            $scope.buttonText = $scope.l.btnLoginInstead;
+
+        }
+
+    };
+
 
     $scope.canSubmit = function() {
+
         if($scope.isLogin) {
+
             if($scope.user.email !== undefined && $scope.user.password !== undefined &&
+
                 $scope.user.email !== '' && $scope.user.password !== '') {
+
                 return true;
+
             }
+
             else return false;
+
         }
+
         else {
+
             if(!$scope.checkMatch() && $scope.newUser.email !== undefined && $scope.newUser.password !== undefined &&
+
                 $scope.newUser.email !== '' && $scope.newUser.password !== '') {
+
                 return true;
+
             }                
+
             else {
+
                 return false;
+
             }
+
         }
+
     };
 
-    $scope.createUser = function(email, password, language) {
 
-        console.log(email + ":" + password + ":" + language);
+    $scope.createUser = function(email, password, language) {
         
         var request = $http.post('/register', {email: email, password: password, language: language});
 
         return request.then(function(response) {
+
             if(response.data.error === 1) {
+
                 logger.error(response.data.user + $scope.messages["alreadyRegistered"]);
+
             }
+
             else {
+
                 logger.success(response.data.user + $scope.messages["registerSuccess"]);
 
                 $scope.login(email, password);
+
             }
+
         });
+
     };    
 
+
     $scope.checkMatch = function() {
+
         return $scope.newUser.password !== $scope.newUser.repeatPassword;
+
     }; 
+
 }]);
 
-app.controller('RootCtrl', ['$scope', '$location', '$http', 'logger', function($scope, $location, $http, logger) {
+
+app.controller('RootCtrl', ['$scope', '$location', '$http', 'langService', 'logger', function($scope, $location, $http, langService, logger) {
+  
     'use strict';
+
+    var updateLang = function(){
+    
+        $scope.l = langService.language();
+
+    };
+
+    langService.registerObserverCallback(updateLang);    
+    
     var request = $http.get('/getActiveUser');
 
     request.then(function(response) {
+    
         if(response.data.loggedIn === 1) {
+    
             $scope.isLoggedIn = true;
+    
             $scope.email = response.data.user.email;
+    
+            langService.setLang(response.data.user.language);
+
+            console.log(response.data.user.language);
+    
         }
+    
         else {
+    
             $scope.isLoggedIn = false;
+    
             $scope.email = "Anonymous";
+
+            langService.setLang("en");
+    
         }
+
     });
 
     $scope.locate = function(loc){
+    
         $location.path(loc);
+    
     };
 
+
     $scope.active = function(loc){
+
         if($location.path() == loc){
+
             return true;
+
         } else {
+
             return false;
+
         }
+
     };
 
     $scope.login = function(email, password) {
@@ -279,35 +373,64 @@ app.controller('RootCtrl', ['$scope', '$location', '$http', 'logger', function($
         var request = $http.post('/login', {email: email, password: password});
 
         return request.then(function(response) {
+
             if(response.data.error === 1) {
+
                 logger.error($scope.$$childTail.messages[response.data.message]);    
+
             }
+
             else {
+
                 $scope.isLoggedIn = true;
-                window.location.href = '#/words';
+
+                $location.path('/words');
+
                 $scope.email = response.data.user;
+
+                langService.setLang(response.data.language);
+
+                console.log("login: " + response.data.language);
+
                 logger.success("Welcome " + response.data.user + "!");
+
             }
+
+            $scope.l = langService.language();
+
         });        
+
     };    
 
+
     $scope.logout = function () {
+
         $http.post('/logout').
+
         success(function(data) {
+
             $scope.isLoggedIn = false;
+
             window.location.href = '/';
+
         });
+
     };    
 
 }]);
 
-app.controller('AboutCtrl', ['$scope', function($scope){
+app.controller('AboutCtrl', ['$scope', 'langService', function($scope, langService){
+
     'use strict';
+
+    $scope.l = langService.language();
     
 }]);
 
-app.controller('NewWordCtrl', ['$scope', '$location', 'wordsService', 'logger', 'messagesService', function($scope, $location, wordsService, logger, messagesService) {
+app.controller('NewWordCtrl', ['$scope', '$location', 'wordsService', 'langService', 'logger', 'messagesService', function($scope, $location, wordsService, langService, logger, messagesService) {
 	'use strict';
+
+	$scope.l = langService.language();
 	
 	if($scope.isLoggedIn === true){
 
@@ -377,8 +500,10 @@ app.controller('SecureCtrl', ['$scope', function($scope){
 	$scope.message = "Message from Secure Controller";
 	
 }]);
-app.controller('StatsCtrl', ['$scope', '$location', 'statsService', 'logger', function($scope, $location, statsService, logger) {
+app.controller('StatsCtrl', ['$scope', '$location', 'statsService', 'langService', 'logger', function($scope, $location, statsService, langService, logger) {
 	'use strict';
+
+	$scope.l = langService.language();
 
 	if($scope.isLoggedIn === true){
 
@@ -386,8 +511,6 @@ app.controller('StatsCtrl', ['$scope', '$location', 'statsService', 'logger', fu
 		
 		.then(function (data){
 			
-			console.log(data);
-
 			$scope.stats = data;
 			
 		}, function (error){
@@ -405,8 +528,10 @@ app.controller('StatsCtrl', ['$scope', '$location', 'statsService', 'logger', fu
 	}
 
 }]);
-app.controller('UserCtrl', ['$scope', '$routeParams', '$location', 'usersService', 'logger', 'messagesService', function($scope, $routeParams, $location, usersService, logger, messagesService) {
+app.controller('UserCtrl', ['$scope', '$routeParams', '$location', 'usersService', 'langService', 'logger', 'messagesService', function($scope, $routeParams, $location, usersService, langService, logger, messagesService) {
 	'use strict';
+
+	$scope.l = langService.language();
 
 	if($scope.isLoggedIn === true){
 	
@@ -419,8 +544,6 @@ app.controller('UserCtrl', ['$scope', '$routeParams', '$location', 'usersService
 		usersService.get($routeParams.email)
 			
 			.then(function (data){
-
-				console.log(data);
 
 				$scope.query = $routeParams.email;
 				
@@ -485,8 +608,10 @@ app.controller('UserCtrl', ['$scope', '$routeParams', '$location', 'usersService
 	}
 
 }]);
-app.controller('UsersCtrl', ['$scope', '$location', 'usersService', 'logger', function($scope, $location, usersService, logger) {
+app.controller('UsersCtrl', ['$scope', '$location', 'usersService', 'langService', 'logger', function($scope, $location, usersService, langService, logger) {
 	'use strict';
+
+	$scope.l = langService.language();
 
 	if($scope.isLoggedIn === true){
 
@@ -512,8 +637,10 @@ app.controller('UsersCtrl', ['$scope', '$location', 'usersService', 'logger', fu
 	}
 
 }]);
-app.controller('WordCtrl', ['$scope', '$routeParams', '$location', 'wordsService', 'logger', 'messagesService', function($scope, $routeParams, $location, wordsService, logger, messagesService) {
+app.controller('WordCtrl', ['$scope', '$routeParams', '$location', 'wordsService', 'langService', 'logger', 'messagesService', function($scope, $routeParams, $location, wordsService, langService, logger, messagesService) {
 	'use strict';
+
+	$scope.l = langService.language();
 
 	if($scope.isLoggedIn === true){
 	
@@ -588,8 +715,10 @@ app.controller('WordCtrl', ['$scope', '$routeParams', '$location', 'wordsService
 	}
 
 }]);
-app.controller('WordsCtrl', ['$scope', '$location', 'wordsService', 'logger', function($scope, $location, wordsService, logger) {
+app.controller('WordsCtrl', ['$scope', '$location', 'wordsService', 'langService', 'logger', function($scope, $location, wordsService, langService, logger) {
 	'use strict';
+
+	$scope.l = langService.language();
 
 	if($scope.isLoggedIn === true){
 

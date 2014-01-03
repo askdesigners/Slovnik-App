@@ -1,6 +1,8 @@
-app.controller('LoginCtrl',['$scope', '$rootScope', '$http', 'logger', 'messagesService',function($scope, $rootScope, $http, logger, messagesService){
- 
+app.controller('LoginCtrl',['$scope', '$rootScope', '$http', 'langService', 'logger', 'messagesService', function($scope, $rootScope, $http, langService, logger, messagesService){
     'use strict';
+
+
+    $scope.l = langService.language();
  
     $scope.messages = messagesService.messages; 
 
@@ -12,6 +14,13 @@ app.controller('LoginCtrl',['$scope', '$rootScope', '$http', 'logger', 'messages
  
     $scope.buttonText = $scope.messages["register"];
 
+    $scope.changeLang = function(){
+
+        langService.setLang($scope.newUser.language);
+
+        $scope.l = langService.language();
+    
+    };
 
     $scope.toggleLogin = function() {
 
@@ -19,7 +28,7 @@ app.controller('LoginCtrl',['$scope', '$rootScope', '$http', 'logger', 'messages
 
             $scope.isLogin = false;
 
-            $scope.buttonText = $scope.messages["login"];
+            $scope.buttonText = $scope.l.btnNotReg;
 
         }
 
@@ -27,7 +36,7 @@ app.controller('LoginCtrl',['$scope', '$rootScope', '$http', 'logger', 'messages
 
             $scope.isLogin = true;
 
-            $scope.buttonText = $scope.messages["register"];
+            $scope.buttonText = $scope.l.btnLoginInstead;
 
         }
 
@@ -72,8 +81,6 @@ app.controller('LoginCtrl',['$scope', '$rootScope', '$http', 'logger', 'messages
 
 
     $scope.createUser = function(email, password, language) {
-
-        console.log(email + ":" + password + ":" + language);
         
         var request = $http.post('/register', {email: email, password: password, language: language});
 
@@ -106,9 +113,18 @@ app.controller('LoginCtrl',['$scope', '$rootScope', '$http', 'logger', 'messages
 
 }]);
 
-app.controller('RootCtrl', ['$scope', '$location', '$http', 'logger', function($scope, $location, $http, logger) {
+
+app.controller('RootCtrl', ['$scope', '$location', '$http', 'langService', 'logger', function($scope, $location, $http, langService, logger) {
   
     'use strict';
+
+    var updateLang = function(){
+    
+        $scope.l = langService.language();
+
+    };
+
+    langService.registerObserverCallback(updateLang);    
     
     var request = $http.get('/getActiveUser');
 
@@ -120,7 +136,9 @@ app.controller('RootCtrl', ['$scope', '$location', '$http', 'logger', function($
     
             $scope.email = response.data.user.email;
     
-            $scope.lang = response.data.user.language;
+            langService.setLang(response.data.user.language);
+
+            console.log(response.data.user.language);
     
         }
     
@@ -130,13 +148,12 @@ app.controller('RootCtrl', ['$scope', '$location', '$http', 'logger', function($
     
             $scope.email = "Anonymous";
 
-            $scope.lang = "en";
+            langService.setLang("en");
     
         }
-    
+
     });
 
-    
     $scope.locate = function(loc){
     
         $location.path(loc);
@@ -176,13 +193,19 @@ app.controller('RootCtrl', ['$scope', '$location', '$http', 'logger', function($
 
                 $scope.isLoggedIn = true;
 
-                window.location.href = '#/words';
+                $location.path('/words');
 
                 $scope.email = response.data.user;
+
+                langService.setLang(response.data.language);
+
+                console.log("login: " + response.data.language);
 
                 logger.success("Welcome " + response.data.user + "!");
 
             }
+
+            $scope.l = langService.language();
 
         });        
 
@@ -205,8 +228,10 @@ app.controller('RootCtrl', ['$scope', '$location', '$http', 'logger', function($
 
 }]);
 
-app.controller('AboutCtrl', ['$scope', function($scope){
+app.controller('AboutCtrl', ['$scope', 'langService', function($scope, langService){
 
     'use strict';
+
+    $scope.l = langService.language();
     
 }]);

@@ -1,5 +1,7 @@
-app.controller('EditWordCtrl', ['$scope', '$location', '$routeParams', 'wordsService', 'logger', 'messagesService', function($scope, $location, $routeParams, wordsService, logger, messagesService) {
+app.controller('EditWordCtrl', ['$scope', '$location', '$routeParams', 'wordsService', 'langService', 'logger', 'messagesService', function($scope, $location, $routeParams, wordsService, langService, logger, messagesService) {
 	'use strict';
+
+	$scope.l = langService.language();
 
 	if($scope.isLoggedIn === true){
 	

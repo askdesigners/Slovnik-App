@@ -110,6 +110,10 @@ body {
   padding: 0 0 20px 0;
 }
 
+.pageTitle {
+  text-align: center;
+}
+
 .about h5{
   color: #FF654D;
   font-size: 1.5em;

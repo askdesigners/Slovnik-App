@@ -1,5 +1,7 @@
-app.controller('UserCtrl', ['$scope', '$routeParams', '$location', 'usersService', 'logger', 'messagesService', function($scope, $routeParams, $location, usersService, logger, messagesService) {
+app.controller('UserCtrl', ['$scope', '$routeParams', '$location', 'usersService', 'langService', 'logger', 'messagesService', function($scope, $routeParams, $location, usersService, langService, logger, messagesService) {
 	'use strict';
+
+	$scope.l = langService.language();
 
 	if($scope.isLoggedIn === true){
 	
@@ -12,8 +14,6 @@ app.controller('UserCtrl', ['$scope', '$routeParams', '$location', 'usersService
 		usersService.get($routeParams.email)
 			
 			.then(function (data){
-
-				console.log(data);
 
 				$scope.query = $routeParams.email;
 				

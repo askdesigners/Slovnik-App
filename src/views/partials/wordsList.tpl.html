@@ -1,8 +1,9 @@
+<h3 class="pageTitle">{{l.btnWords}}</h3>
 <ul ng-show="wordsExist" class="wordList">
 	<li ng-repeat="word in wordsList | object2Array | orderBy:'says'" >
 		<a href="/#/word/{{word.says}}">{{word.says}}</a>
 	</li>
 </ul>
 <div ng-show="!wordsExist">
-	<h4 class="noWords">There are no words yet!</h4>
+	<h4 class="noWords">{{l.msNoWords}}</h4>
 </div>

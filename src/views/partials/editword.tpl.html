@@ -1,45 +1,45 @@
 <form name="newWordForm" class="form-horizontal">
 	<div class="control-group">
-		<label for="says" class="control-label">Ollie Says:</label>
+		<label for="says" class="control-label">{{l.formSays}}:</label>
 		<div class="controls">
 			<input type="text" id="says" class="input-xlarge seedlarge" ng-model="word.says" required>
 		</div>
 	</div>
 	<div class="control-group">
-		<label for="means" class="control-label">It Means:</label>
+		<label for="means" class="control-label">{{l.formMeans}}:</label>
 		<div class="controls">
 			<input type="text" id="means" class="input-xlarge seedlarge" ng-model="word.means" required>
 		</div>
 	</div>
 	<div class="control-group">
-		<label for="language" class="control-label">He says it in:</label>
+		<label for="language" class="control-label">{{l.formLang}}:</label>
 		<div class="controls">
 			<label class="radio inline">
 				<input type="radio" name="language" value="czech" ng-model="word.language" required>
-				czech
+				{{l.czech}}
 			</label>
 			<label class="radio inline">
 				<input type="radio" name="language" value="english" ng-model="word.language" required>
-				english
+				{{l.english}}
 			</label>
 		</div>
 	</div>
 	<div class="control-group">
-		<label for="translation" class="control-label">And it Translates to:</label>
+		<label for="translation" class="control-label">{{l.formTrans}}:</label>
 		<div class="controls">
 			<input type="text" id="translation" class="input-xlarge seedlarge" ng-model="word.translation" required>
 		</div>
 	</div>
 	<div class="control-group">
-		<label for="more" class="control-label">More:</label>
+		<label for="more" class="control-label">{{l.more}}:</label>
 		<div class="controls">
 			<textarea id="more" class="seedlarge form-control" rows="4" ng-model="word.more"></textarea>
 		</div>
 	</div>
 	<div class="reset">
-        <a class="resetForm" ng-click="cancelEdit()">Cancel Edit</a>
+        <a class="resetForm" ng-click="cancelEdit()">{{l.formCancelEdit}}</a>
     </div>
 	<div class="control-group">
-        <input type="submit" value="save" id="saveWordButton" class="btn btn-success btn-lg btn-block" ng-disabled="!canSave()" ng-click="saveEditedWord(word)"> 
+        <input type="submit" value="{{l.formSave}}" id="saveWordButton" class="btn btn-success btn-lg btn-block" ng-disabled="!canSave()" ng-click="saveEditedWord(word)"> 
     </div>
 </form>

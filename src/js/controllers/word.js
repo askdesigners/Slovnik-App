@@ -1,5 +1,7 @@
-app.controller('WordCtrl', ['$scope', '$routeParams', '$location', 'wordsService', 'logger', 'messagesService', function($scope, $routeParams, $location, wordsService, logger, messagesService) {
+app.controller('WordCtrl', ['$scope', '$routeParams', '$location', 'wordsService', 'langService', 'logger', 'messagesService', function($scope, $routeParams, $location, wordsService, langService, logger, messagesService) {
 	'use strict';
+
+	$scope.l = langService.language();
 
 	if($scope.isLoggedIn === true){
 	

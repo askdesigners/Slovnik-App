@@ -1,16 +1,16 @@
 <div ng-show="userExists" class="userDef">
 	<p class="profileLabel">Email</p>
 	<h4 class="profileInfo">{{user.email}}</h4>
-	<p class="profileLabel">Language</p>
+	<p class="profileLabel">{{l.uiLanguage}}</p>
 	<h4 class="profileInfo">{{user.language}}</h4>
 </div>
 <div class="deleteContainer" ng-show="userExists">
-	<button ng-show="!deleting" ng-click="edit()" class="btn btn-primary btn-sm edit">Edit user</button>
-	<button ng-show="!deleting" ng-click="showDelete()" class="btn btn-primary btn-sm showDelete">Delete user</button>
-	<button ng-show="deleting" ng-click="deleteUser()" class="btn btn-danger btn-xs delete">Delete them!</button>
-	<a ng-show="deleting" ng-click="cancelDelete()">Cancel</a>
+	<button ng-show="!deleting" ng-click="edit()" class="btn btn-primary btn-sm edit">{{l.formEditUser}}</button>
+	<button ng-show="!deleting" ng-click="showDelete()" class="btn btn-primary btn-sm showDelete">{{l.formDeleteUser}}</button>
+	<button ng-show="deleting" ng-click="deleteUser()" class="btn btn-danger btn-xs delete">{{l.formDeleteIt}}</button>
+	<a ng-show="deleting" ng-click="cancelDelete()">{{l.formCancel}}</a>
 </div>
 
 <div ng-show="!userExists">
-	<p>"{{query}}" is not a user.</p>
+	<p>"{{query}}" {{l.msNoUser}}</p>
 </div>

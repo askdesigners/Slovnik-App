@@ -6,17 +6,17 @@
 		</div>
 	</div>
 	<div class="control-group">
-            <label class="control-label">Password (leave blank to keep old password)</label>
+            <label class="control-label">{{l.formPassword}} {{l.formPasswordMessage}}</label>
             <div class="controls">
                 <input type="text" ng-model="user.password" 
                 class="input-xlarge seedlarge">
             </div>
         </div>                    
         <div class="control-group">
-            <label class="control-label">Repeat Password</label>
+            <label class="control-label">{{l.formPasswordAgain}}</label>
             <div class="controls">
                 <input type="text" ng-model="user.repeatPassword" class="input-xlarge seedlarge" >
-                <span class="text-error" ng-show='checkMatch()'>Passwords do not match!</span>
+                <span class="text-error" ng-show='checkMatch()'>{{l.msNoMatch}}</span>
             </div>
         </div>
 	<div class="control-group">
@@ -24,21 +24,21 @@
 		<div class="controls">
 			<label class="radio inline">
 				<input type="radio" name="language" value="cz" ng-model="user.language" required>
-				čeština
+				{{l.czech}}
 			</label>
 			<label class="radio inline">
 				<input type="radio" name="language" value="en" ng-model="user.language" required>
-				english
+				{{l.english}}
 			</label>
 		</div>
 	</div>
 	<div class="reset">
-        <a class="resetForm" ng-click="cancelEdit()">Cancel Edit</a>
+        <a class="resetForm" ng-click="cancelEdit()">{{l.formCancelEdit}}</a>
     </div>
 	<div class="control-group">
-        <input type="submit" value="save" id="saveWordButton" class="btn btn-success btn-lg btn-block" ng-disabled="!canSave()" ng-click="saveEditedUser(user)"> 
+        <input type="submit" value="{{l.formSave}}" id="saveWordButton" class="btn btn-success btn-lg btn-block" ng-disabled="!canSave()" ng-click="saveEditedUser(user)"> 
     </div>
 </form>
 <div ng-show="!userExists">
-	<p>"{{query}}" is not a user.</p>
+	<p>"{{query}}" {{l.msNoUser}}</p>
 </div>
