@@ -132,6 +132,11 @@ body {
   text-align: center;
 }
 
+.text-error{
+  color: red;
+  display: block;
+}
+
 .about {
   max-width: 500px;
   margin: 0 auto;
