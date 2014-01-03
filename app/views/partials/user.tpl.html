@@ -1,8 +1,6 @@
 <div ng-show="userExists" class="userDef">
-	<p class="profileLabel">Email</p>
-	<h4 class="profileInfo">{{user.email}}</h4>
-	<p class="profileLabel">{{l.uiLanguage}}</p>
-	<h4 class="profileInfo">{{user.language}}</h4>
+	<h4 class="profileInfo">Email: {{user.email}}</h4>
+	<h4 class="profileInfo">{{l.uiLanguage}}: {{user.language}}</h4>
 </div>
 <div class="deleteContainer" ng-show="userExists">
 	<button ng-show="!deleting" ng-click="edit()" class="btn btn-primary btn-sm edit">{{l.formEditUser}}</button>

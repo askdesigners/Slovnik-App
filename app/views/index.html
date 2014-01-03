@@ -48,6 +48,9 @@
                         <button type="button" class="btn btn-primary btn-lg statsButton" ng-click="locate('/stats')" ng-class="{active: active('/stats')}">
                             <span class="glyphicon glyphicon-stats"></span> {{l.btnStats}}
                         </button>
+                        <button type="button" class="btn btn-primary btn-lg usersButton" ng-click="locate('/users')" ng-class="{active: active('/users')}">
+                            <span class="glyphicon glyphicon-user"></span> {{l.btnUsers}}
+                        </button>
                     </nav>   
                 </div>
                 <div class="container-fluid" ng-view ng-animate="{enter: 'view-enter'}"></div>
