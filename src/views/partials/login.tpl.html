@@ -11,7 +11,7 @@
             </div>
         </div>
         <div class="control-group">
-            <label class="control-label" for="inputPassword">Password</label>
+            <label class="control-label" for="inputPassword">{{l.formPassword}}</label>
             <div class="controls">
                 <input type="password" name="password" class="input-xlarge seedlarge" ng-model="user.password">
             </div>
@@ -24,6 +24,19 @@
         </div>
     </form>
     <form class="form-horizontal" ng-show="!isLogin">
+        <div class="control-group">
+            <label for="language" class="control-label">Language / Jazyk</label>
+            <div class="controls">
+                <label class="radio inline">
+                    <input type="radio" name="language" value="cz" ng-model="newUser.language" ng-change="changeLang()" required>
+                    čeština
+                </label>
+                <label class="radio inline">
+                    <input type="radio" name="language" value="en" ng-model="newUser.language" ng-change="changeLang()" required>
+                    english
+                </label>
+            </div>
+        </div>
         <div class="control-group">                                    
             <label class="control-label">Email</label>
             <div class="controls">
@@ -31,35 +44,22 @@
             </div>                                    
         </div>
         <div class="control-group">
-            <label class="control-label">Password</label>
+            <label class="control-label">{{l.formPassword}}</label>
             <div class="controls">
                 <input type="text" ng-model="newUser.password" 
                 class="input-xlarge seedlarge">
             </div>
         </div>                    
         <div class="control-group">
-            <label class="control-label">Repeat Password</label>
+            <label class="control-label">{{l.formPasswordAgain}}</label>
             <div class="controls">
                 <input type="text" ng-model="newUser.repeatPassword" class="input-xlarge seedlarge" >
-                <span class="text-error" ng-show='checkMatch()'>Passwords do not match!</span>
-            </div>
-        </div>
-        <div class="control-group">
-            <label for="language" class="control-label">Language / Jazyk</label>
-            <div class="controls">
-                <label class="radio inline">
-                    <input type="radio" name="language" value="czech" ng-model="newUser.language" required>
-                    czech
-                </label>
-                <label class="radio inline">
-                    <input type="radio" name="language" value="english" ng-model="newUser.language" required>
-                    english
-                </label>
+                <span class="text-error" ng-show='checkMatch()'>{{l.msNoMatch}}</span>
             </div>
         </div>
         <div class="control-group">
             <div class="controls">
-                <input type="submit" value="Submit" class="btn btn-success btn-block loginButton" 
+                <input type="submit" value="{{l.formSubmit}}" class="btn btn-success btn-block loginButton" 
                 ng-disabled="!canSubmit()"
                 ng-click="createUser(newUser.email, newUser.password, newUser.language)">
             </div>

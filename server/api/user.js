@@ -54,7 +54,7 @@ exports.create = function (req, res) {
                     //send Email
                     mailer.sendRegistrationEmail(user.email, hashedConfirmation);
 
-                    res.send({ error: 0, user: user.email }, 201);
+                    res.send({ error: 0, user: user.email, language: user.language }, 201);
 
                 }
 
@@ -105,6 +105,8 @@ exports.getActiveUser = function (req, res) {
             }
 
             returnedUser.email = user.email;
+
+            returnedUser.language = user.language;
 
             res.send({ loggedIn: 1, user: returnedUser}, 201);
 

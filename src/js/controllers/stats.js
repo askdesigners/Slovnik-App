@@ -1,5 +1,7 @@
-app.controller('StatsCtrl', ['$scope', '$location', 'statsService', 'logger', function($scope, $location, statsService, logger) {
+app.controller('StatsCtrl', ['$scope', '$location', 'statsService', 'langService', 'logger', function($scope, $location, statsService, langService, logger) {
 	'use strict';
+
+	$scope.l = langService.language();
 
 	if($scope.isLoggedIn === true){
 
@@ -7,8 +9,6 @@ app.controller('StatsCtrl', ['$scope', '$location', 'statsService', 'logger', fu
 		
 		.then(function (data){
 			
-			console.log(data);
-
 			$scope.stats = data;
 			
 		}, function (error){

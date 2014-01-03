@@ -1,5 +1,7 @@
-app.controller('EditUserCtrl', ['$scope', '$location', '$routeParams', 'usersService', 'logger', 'messagesService', function($scope, $location, $routeParams, usersService, logger, messagesService) {
+app.controller('EditUserCtrl', ['$scope', '$location', '$routeParams', 'usersService', 'langService', 'logger', 'messagesService', function($scope, $location, $routeParams, usersService, langService, logger, messagesService) {
 	'use strict';
+
+	$scope.l = langService.language();
 
 	if($scope.isLoggedIn === true){
 	
@@ -57,6 +59,8 @@ app.controller('EditUserCtrl', ['$scope', '$location', '$routeParams', 'usersSer
 				} else {
 				
 					logger.success("User updated");
+
+					langService.setLang(data.user.language);
 				
 					$location.path('/user/' + data.user.email);
 				

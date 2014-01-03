@@ -1,5 +1,7 @@
-app.controller('UsersCtrl', ['$scope', '$location', 'usersService', 'logger', function($scope, $location, usersService, logger) {
+app.controller('UsersCtrl', ['$scope', '$location', 'usersService', 'langService', 'logger', function($scope, $location, usersService, langService, logger) {
 	'use strict';
+
+	$scope.l = langService.language();
 
 	if($scope.isLoggedIn === true){
 

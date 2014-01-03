@@ -13,6 +13,10 @@ font-family: 'Quando', serif;
   display: inline-block;
 }
 
+.usersButton {
+  display: inline-block;
+}
+
 @media (min-width:320px) {
   /* smartphones, portrait iPhone, portrait 480x320 phones (Android) */
 
@@ -25,6 +29,10 @@ font-family: 'Quando', serif;
   }
 
   .statsButton {
+    display: none;
+  }
+
+  .usersButton {
     display: none;
   }
 
@@ -52,6 +60,10 @@ font-family: 'Quando', serif;
     width: 80%;
   }
 
+  .wordCount {
+    font-size: 4em !important;
+  }
+
 }
 @media (min-width:600px) {
   /* portrait tablets, portrait iPad, e-readers (Nook/Kindle), landscape 800x480 phones (Android) */ 
@@ -68,8 +80,16 @@ font-family: 'Quando', serif;
     display: inline-block;
   }
 
+  .usersButton {
+    display: inline-block;
+  }
+
   .about {
     width: 80%;
+  }
+
+  .wordCount {
+    font-size: 5em !important;
   }
 
 }
@@ -84,8 +104,16 @@ font-family: 'Quando', serif;
     display: inline-block;
   }
 
+  .usersButton {
+    display: inline-block;
+  }
+
   .about {
     width: 80%;
+  }
+
+  .wordCount {
+    font-size: 5em !important;
   }
 
 }
@@ -108,6 +136,10 @@ body {
   max-width: 500px;
   margin: 0 auto;
   padding: 0 0 20px 0;
+}
+
+.pageTitle {
+  text-align: center;
 }
 
 .about h5{
@@ -371,8 +403,30 @@ ul.wordList  {
   text-align: center;
 }
 
-.userList {
+.usersList {
   list-style: none;
   text-align: center;
   padding: 0 0 20px 0;
+}
+
+.usersList li a {
+  display: block;
+  padding: 10px 0;
+  border-bottom: 1px dotted #FF654D;
+  font-size: 1.2em;
+}
+
+.usersList li a span {
+  color: #FF654D;
+  font-size: 0.8em;
+}
+
+.usersLink{
+  text-align: center;
+  padding-bottom: 20px;
+}
+
+.userDef{
+  text-align: center;
+  font-size: 1.2em;
 }

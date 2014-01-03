@@ -43,6 +43,8 @@ function configureRoutes(passport) {
 
         console.log("User " + user.email + " found.");
 
+        console.log(user);
+
         req.logIn(user, function(err) {
 
             if (err) { 
@@ -51,7 +53,7 @@ function configureRoutes(passport) {
 
             }
 
-            res.send({ error: 0, user: user.email }, 201);      
+            res.send({ error: 0, user: user.email, language: user.language }, 201);      
 
         });
 
