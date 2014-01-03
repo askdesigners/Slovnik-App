@@ -199,6 +199,8 @@ app.controller('RootCtrl', ['$scope', '$location', '$http', 'langService', 'logg
 
                 langService.setLang(response.data.language);
 
+                console.log(response);
+
                 console.log("login: " + response.data.language);
 
                 logger.success("Welcome " + response.data.user + "!");
