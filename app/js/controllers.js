@@ -368,8 +368,6 @@ app.controller('RootCtrl', ['$scope', '$location', '$http', 'langService', 'logg
 
     $scope.login = function(email, password) {
 
-        console.log('login');
-
         var request = $http.post('/login', {email: email, password: password});
 
         return request.then(function(response) {
@@ -388,12 +386,12 @@ app.controller('RootCtrl', ['$scope', '$location', '$http', 'langService', 'logg
 
                 $scope.email = response.data.user;
 
-                langService.setLang(response.data.language);
-
-                console.log(response);
-
-                console.log("login: " + response.data.language);
-
+                if(response.data.language){
+                    langService.setLang(response.data.language);
+                } else {
+                    langService.setLang("en");
+                }
+                
                 logger.success("Welcome " + response.data.user + "!");
 
             }
